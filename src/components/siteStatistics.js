@@ -1,3 +1,3 @@
-export const createSiteStatisticsTemplate = () => {
-  return `<p>130 291 movies inside</p>`;
+export const createSiteStatisticsTemplate = (number) => {
+  return `<p>${number} movies inside</p>`;
 };
