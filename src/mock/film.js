@@ -1,5 +1,5 @@
-import { MAX_LENGTH_OF_DESCRIPTION } from '../const';
 import { getRandomArrayItem, getRandomIntegerNumber } from '../utils';
+import { generateComments } from './comment';
 
 const titles = [
   'The Dance of Life',
@@ -23,8 +23,21 @@ const srcPosters = [
   './images/posters/made-for-each-other.png',
 ];
 
-const description =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
+const description = [
+  ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.'],
+  ['Cras aliquet varius magna, non porta ligula feugiat eget.'],
+  ['Fusce tristique felis at fermentum pharetra.'],
+  ['Aliquam id orci ut lectus varius viverra.'],
+  [
+    'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
+  ],
+  [
+    'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis.',
+  ],
+  ['Aliquam erat volutpat.'],
+  ['Nunc fermentum tortor ac porta dapibus.'],
+  ['In rutrum ac purus sit amet tempus.'],
+];
 
 const generateRating = () => {
   const minRating = 0;
@@ -39,32 +52,65 @@ const formatDuration = (duration) => {
 };
 
 const generateDescription = (text) => {
-  text = text.split('.');
   const countSentence = getRandomIntegerNumber(1, 5);
-  let result = [];
-  for (let index = 1; index <= countSentence; index++) {
-    result.push(text[getRandomIntegerNumber(0, text.length - 1)]);
+  let description = new Set();
+  while (description.size < countSentence) {
+    description.add(text[getRandomIntegerNumber(0, text.length - 1)]);
   }
-  result = result.join('.');
-  if (result.length > MAX_LENGTH_OF_DESCRIPTION) {
-    return result.slice(0, MAX_LENGTH_OF_DESCRIPTION + 1).replace(/.$/, '...');
-  } else {
-    result = result.split('');
-    result.push('.');
-    return result.join('');
-  }
+  return Array.from(description).join(' ');
+};
+
+const filmAges = ['0+', '6+', '12+', '16+', '18+'];
+
+const directors = [
+  'Anthony Mann',
+  'Quentin Tarantino',
+  'James Cameron',
+  'Christopher Nolan',
+  'Niklaus Torres',
+  'Braxton Powell',
+  'Adriel Peterson',
+];
+
+const writters = [
+  ['Alejandro Bennett', 'Quintana Sanchez', 'Remington Ross'],
+  ['Silas Howard', 'Layla Barnes', 'Raphael Taylor'],
+  ['Raphael Davis', 'Zeppelin Thomas', 'Ishmael Moore'],
+  ['Alexa Price', 'Tenley Jenkins', 'Vann Coleman'],
+  ['Karter Harris', 'Briar Howard', 'Donald Butler'],
+  ['Seth Roberts', 'Maverick Williams', 'Zack James'],
+  ['Marcus Baker', 'Zackery Martinez', 'Fabiola Cox'],
+];
+
+const actors = [
+  ['Gage Sanchez', 'Jayla Watson', 'Reyna Allen'],
+  ['Phoebe Butler', 'Franklin Moore', 'Lexi Coleman'],
+  ['Noa Price', 'Jazlyn Martin', 'Ulyssa Griffin'],
+  ['Stefan Perez', 'Austin Ross', 'Madilyn Price'],
+  ['Urina Gray', 'Zayne Nelson', 'Valencia Smith'],
+  ['Grace Perez', 'Haylie Cooper', 'Nyla Gray'],
+  ['Brooklynn Stewart', 'Rosa Wood', 'Colby Smith'],
+];
+
+const generateDate = () => {
+  return new Date(getRandomIntegerNumber(1924, 2020), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 31));
 };
 
 export const generateFilm = () => {
   return {
     title: getRandomArrayItem(titles),
+    age: getRandomArrayItem(filmAges),
     rating: generateRating(),
-    year: getRandomIntegerNumber(1924, 2020),
+    director: getRandomArrayItem(directors),
+    writters: getRandomArrayItem(writters),
+    actors: getRandomArrayItem(actors),
+    date: generateDate(),
+    country: 'USA',
     duration: formatDuration(getRandomIntegerNumber(70, 210)),
     genre: getRandomArrayItem(genres),
     srcPoster: getRandomArrayItem(srcPosters),
     description: generateDescription(description),
-    countOfComments: getRandomIntegerNumber(0, 5),
+    comments: generateComments(getRandomIntegerNumber(1, 4)),
   };
 };
 

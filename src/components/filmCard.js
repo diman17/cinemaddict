@@ -1,7 +1,19 @@
 import { createElement } from '../utils';
+import { MAX_LENGTH_OF_DESCRIPTION } from '../const';
 
 const createFilmCardTemplate = (film) => {
-  const { title, rating, year, duration, genre, srcPoster, description, countOfComments } = film;
+  const { title, rating, date, duration, genre, srcPoster, description, comments } = film;
+
+  const year = date.getFullYear();
+
+  const getShortDescription = (description) => {
+    if (description.length > MAX_LENGTH_OF_DESCRIPTION) {
+      description = description.split('').slice(0, MAX_LENGTH_OF_DESCRIPTION).join('');
+      return description.replace(/.$/, '...');
+    } else {
+      return description;
+    }
+  };
 
   return `<article class="film-card">
       <h3 class="film-card__title">${title}</h3>
@@ -12,8 +24,8 @@ const createFilmCardTemplate = (film) => {
         <span class="film-card__genre">${genre}</span>
       </p>
       <img src="${srcPoster}" alt="" class="film-card__poster">
-      <p class="film-card__description">${description}</p>
-      <a class="film-card__comments">${countOfComments} comments</a>
+      <p class="film-card__description">${getShortDescription(description)}</p>
+      <a class="film-card__comments">${comments.length} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
@@ -24,7 +36,8 @@ const createFilmCardTemplate = (film) => {
 
 export class FilmCardComponent {
   constructor(film) {
-    (this._film = film), (this._element = null);
+    this._film = film;
+    this._element = null;
   }
 
   getTemplate() {
