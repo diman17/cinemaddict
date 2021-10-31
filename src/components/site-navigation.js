@@ -1,5 +1,5 @@
 import { generateSiteNavigationItems } from '../mock/site-navigation';
-import { createElement } from '../utils';
+import { AbstractComponent } from './abstract-component';
 
 const createSiteNavigationItem = (href, isActive, name, isCountable, count) => {
   return `<a href="${href}" class="main-navigation__item ${isActive ? 'main-navigation__item--active' : ''}">${name} ${
@@ -19,24 +19,9 @@ const createSiteNavigationTemplate = () => {
     </nav>`;
 };
 
-export class SiteNavigationComponent {
-  constructor() {
-    this._element = null;
-  }
+export class SiteNavigationComponent extends AbstractComponent {
 
   getTemplate() {
     return createSiteNavigationTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

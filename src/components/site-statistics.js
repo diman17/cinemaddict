@@ -1,28 +1,17 @@
-import { createElement } from '../utils';
+import { AbstractComponent } from './abstract-component';
 
 const createSiteStatisticsTemplate = (count) => {
   return `<p>${count} movies inside</p>`;
 };
 
-export class SiteStatisticsComponent {
+export class SiteStatisticsComponent extends AbstractComponent {
   constructor(count) {
+    super()
+
     this._count = count;
-    this._element = null;
   }
 
   getTemplate() {
     return createSiteStatisticsTemplate(this._count);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

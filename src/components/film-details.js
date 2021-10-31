@@ -1,5 +1,5 @@
 import { MONTHS } from '../const';
-import { createElement } from '../utils';
+import { AbstractComponent } from './abstract-component';
 
 const createFilmDetailsTemplate = (film) => {
   const {
@@ -132,24 +132,14 @@ const createFilmDetailsTemplate = (film) => {
 </section>`;
 };
 
-export class FilmDetailsComponent {
+export class FilmDetailsComponent extends AbstractComponent {
   constructor(film) {
+    super()
+
     this._film = film;
-    this._element = null;
   }
 
-  getTemplate(film) {
-    return createFilmDetailsTemplate(film);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this._film));
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
   }
 }
