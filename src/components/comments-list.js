@@ -5,7 +5,6 @@ const createCommentsListTemplate = () => {
 };
 
 export class CommentsListComponent extends AbstractComponent {
-
   getTemplate() {
     return createCommentsListTemplate();
   }

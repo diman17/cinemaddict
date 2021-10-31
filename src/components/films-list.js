@@ -7,7 +7,6 @@ const createFilmsListTemplate = () => {
 };
 
 export class FilmsListComponent extends AbstractComponent {
-
   getTemplate() {
     return createFilmsListTemplate();
   }

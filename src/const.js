@@ -5,7 +5,7 @@ export const EXTRA_LIST_FILMS = [
   },
   {
     name: 'Most commented',
-    sort: 'CountOfComments',
+    sort: 'comments',
   },
 ];
 
@@ -33,10 +33,3 @@ export const MONTHS = [
   'November',
   'December',
 ];
-
-export const renderPosition = {
-  APPEND: 'append',
-  PREPEND: 'prepend',
-  BEFORE: 'before',
-  AFTER: 'after',
-};

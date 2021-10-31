@@ -8,7 +8,7 @@ const createFilmsListExtraTemplate = (listExtra) => {
 
 export class FilmsListExtraComponent extends AbstractComponent {
   constructor(listExtra) {
-    super()
+    super();
 
     this._listExtra = listExtra;
   }

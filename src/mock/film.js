@@ -1,4 +1,4 @@
-import { getRandomArrayItem, getRandomIntegerNumber } from '../utils';
+import { getRandomArrayItem, getRandomIntegerNumber } from '../utils/common';
 import { generateComments } from './comment';
 
 const titles = [
@@ -110,7 +110,7 @@ export const generateFilm = () => {
     genre: getRandomArrayItem(genres),
     srcPoster: getRandomArrayItem(srcPosters),
     description: generateDescription(description),
-    comments: generateComments(getRandomIntegerNumber(1, 4)),
+    comments: generateComments(getRandomIntegerNumber(1, 6)),
   };
 };
 

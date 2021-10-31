@@ -20,8 +20,8 @@ const createCommentTemplate = (comment) => {
 
 export class CommentComponent extends AbstractComponent {
   constructor(comment) {
-    super()
-    
+    super();
+
     this._comment = comment;
   }
 

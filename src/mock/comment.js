@@ -1,4 +1,4 @@
-import { getRandomArrayItem, getRandomIntegerNumber } from '../utils';
+import { getRandomArrayItem, getRandomIntegerNumber } from '../utils/common';
 
 const srcEmojies = [
   './images/emoji/smile.png',

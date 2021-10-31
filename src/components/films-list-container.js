@@ -4,8 +4,7 @@ const createFilmsListContainerTemplate = () => {
   return `<div class="films-list__container"></div>`;
 };
 
-export class FilmsListContainerComponent extends AbstractComponent{
-
+export class FilmsListContainerComponent extends AbstractComponent {
   getTemplate() {
     return createFilmsListContainerTemplate();
   }

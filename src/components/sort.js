@@ -9,7 +9,6 @@ const createSortTemplate = () => {
 };
 
 export class SortComponent extends AbstractComponent {
- 
   getTemplate() {
     return createSortTemplate();
   }

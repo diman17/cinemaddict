@@ -5,7 +5,6 @@ const createFilmsSectionTemplate = () => {
 };
 
 export class FilmsSectionComponent extends AbstractComponent {
-
   getTemplate() {
     return createFilmsSectionTemplate();
   }

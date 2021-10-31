@@ -5,8 +5,11 @@ const createShowMoreButtonTemplate = () => {
 };
 
 export class ShowMoreButtonComponent extends AbstractComponent {
-  
   getTemplate() {
     return createShowMoreButtonTemplate();
+  }
+
+  setClickHandler(handler) {
+    this.getElement().addEventListener('click', handler);
   }
 }

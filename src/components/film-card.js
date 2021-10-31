@@ -36,12 +36,24 @@ const createFilmCardTemplate = (film) => {
 
 export class FilmCardComponent extends AbstractComponent {
   constructor(film) {
-    super()
+    super();
 
     this._film = film;
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._film);
+  }
+
+  setPosterClickHandler(handler) {
+    this.getElement().querySelector('.film-card__poster').addEventListener('click', handler);
+  }
+
+  setTitleClickHandler(handler) {
+    this.getElement().querySelector('.film-card__title').addEventListener('click', handler);
+  }
+
+  setCommentsClickHandler(handler) {
+    this.getElement().querySelector('.film-card__comments').addEventListener('click', handler);
   }
 }

@@ -6,7 +6,7 @@ const createSiteStatisticsTemplate = (count) => {
 
 export class SiteStatisticsComponent extends AbstractComponent {
   constructor(count) {
-    super()
+    super();
 
     this._count = count;
   }

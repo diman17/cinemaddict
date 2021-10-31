@@ -134,12 +134,16 @@ const createFilmDetailsTemplate = (film) => {
 
 export class FilmDetailsComponent extends AbstractComponent {
   constructor(film) {
-    super()
+    super();
 
     this._film = film;
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
+  }
+
+  setCloseButtonClickHandler(handler) {
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', handler);
   }
 }

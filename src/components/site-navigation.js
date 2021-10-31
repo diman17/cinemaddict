@@ -20,7 +20,6 @@ const createSiteNavigationTemplate = () => {
 };
 
 export class SiteNavigationComponent extends AbstractComponent {
-
   getTemplate() {
     return createSiteNavigationTemplate();
   }

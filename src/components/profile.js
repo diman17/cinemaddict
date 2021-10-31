@@ -10,7 +10,7 @@ const createProfileTemplate = (profile) => {
 
 export class ProfileComponent extends AbstractComponent {
   constructor(profile) {
-    super()
+    super();
 
     this._profile = profile;
   }
