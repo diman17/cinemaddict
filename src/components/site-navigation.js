@@ -1,4 +1,4 @@
-import { generateSiteNavigationItems } from '../mock/siteNavigation';
+import { generateSiteNavigationItems } from '../mock/site-navigation';
 import { createElement } from '../utils';
 
 const createSiteNavigationItem = (href, isActive, name, isCountable, count) => {

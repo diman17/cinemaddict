@@ -1,12 +1,12 @@
 import { ProfileComponent } from './components/profile';
-import { SiteNavigationComponent } from './components/siteNavigation';
+import { SiteNavigationComponent } from './components/site-navigation';
 import { SortComponent } from './components/sort';
-import { FilmsSectionComponent } from './components/filmsSection';
-import { FilmsListComponent } from './components/filmsList';
-import { FilmsListContainerComponent } from './components/filmsListContainer';
-import { ShowMoreButtonComponent } from './components/showMoreButton';
-import { FilmsListExtraComponent } from './components/filmsListExtra';
-import { SiteStatisticsComponent } from './components/siteStatistics';
+import { FilmsSectionComponent } from './components/films-section';
+import { FilmsListComponent } from './components/films-list';
+import { FilmsListContainerComponent } from './components/films-list-container';
+import { ShowMoreButtonComponent } from './components/show-more-button';
+import { FilmsListExtraComponent } from './components/films-list-extra';
+import { SiteStatisticsComponent } from './components/site-statistics';
 import { generateFilms } from './mock/film';
 import { generateProfile } from './mock/profile';
 import {
@@ -18,9 +18,9 @@ import {
   TOTAL_FILMS,
 } from './const';
 import { render } from './utils';
-import { FilmCardComponent } from './components/filmCard';
-import { FilmDetailsComponent } from './components/filmDetails';
-import { CommentsListComponent } from './components/commentsList';
+import { FilmCardComponent } from './components/film-card';
+import { FilmDetailsComponent } from './components/film-details';
+import { CommentsListComponent } from './components/comments-list';
 import { CommentComponent } from './components/comment';
 
 const siteHeaderElement = document.querySelector('.header');
