@@ -1,5 +1,3 @@
-export const cloneDeep = require('lodash.clonedeep');
-
 export const getRandomIntegerNumber = (min, max) => {
   return Math.floor(min + Math.random() * (max + 1 - min));
 };

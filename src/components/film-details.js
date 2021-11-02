@@ -97,6 +97,8 @@ const createFilmDetailsTemplate = (film) => {
           comments.length
         }</span></h3>
 
+        <ul class="film-details__comments-list"></ul>
+
         <div class="film-details__new-comment">
           <div for="add-emoji" class="film-details__add-emoji-label"></div>
 
