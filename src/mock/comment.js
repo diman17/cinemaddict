@@ -1,19 +1,12 @@
 import { getRandomArrayItem, getRandomIntegerNumber } from '../utils/common';
 
-const srcEmojies = [
-  './images/emoji/smile.png',
-  './images/emoji/angry.png',
-  './images/emoji/puke.png',
-  './images/emoji/sleeping.png',
-];
+const srcEmojies = ['./images/emoji/smile.png', './images/emoji/angry.png', './images/emoji/puke.png', './images/emoji/sleeping.png'];
 const text = [
   ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.'],
   ['Cras aliquet varius magna, non porta ligula feugiat eget.'],
   ['Fusce tristique felis at fermentum pharetra.'],
   ['Aliquam id orci ut lectus varius viverra.'],
-  [
-    'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-  ],
+  ['Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.'],
   [
     'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis.',
   ],
@@ -31,14 +24,7 @@ const generateText = (text) => {
   return Array.from(result).join(' ');
 };
 
-const authors = [
-  'Yash Hughes',
-  'Owen James',
-  'Ezekiel Roberts',
-  'Winifrede Adams',
-  'Paloma Brown',
-  'Luciana Hernandez',
-];
+const authors = ['Yash Hughes', 'Owen James', 'Ezekiel Roberts', 'Winifrede Adams', 'Paloma Brown', 'Luciana Hernandez'];
 
 const generateDay = () => {
   return new Date(

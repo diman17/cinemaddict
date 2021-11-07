@@ -26,6 +26,6 @@ export class CommentComponent extends AbstractComponent {
   }
 
   getTemplate() {
-    return createCommentTemplate(this.comment);
+    return createCommentTemplate(this._comment);
   }
 }

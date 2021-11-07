@@ -46,12 +46,10 @@ for (let i = 0; i < EXTRA_LIST_FILMS.length; i++) {
 
   const sortFilms = cloneDeep(films);
 
-  if (EXTRA_LIST_FILMS[i].sort === EXTRA_LIST_FILMS[0].sort) {
-    sortFilms.sort((a, b) => b[EXTRA_LIST_FILMS[0].sort] - a[EXTRA_LIST_FILMS[0].sort]);
-  }
-
   if (EXTRA_LIST_FILMS[i].sort === EXTRA_LIST_FILMS[1].sort) {
     sortFilms.sort((a, b) => b[EXTRA_LIST_FILMS[1].sort].length - a[EXTRA_LIST_FILMS[1].sort].length);
+  } else {
+    sortFilms.sort((a, b) => b[EXTRA_LIST_FILMS[0].sort] - a[EXTRA_LIST_FILMS[0].sort]);
   }
 
   for (let j = 0; j < FILMS_COUNT_IN_FILMS_LIST_EXTRA; j++) {
