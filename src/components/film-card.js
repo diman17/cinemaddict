@@ -2,7 +2,7 @@ import { MAX_LENGTH_OF_DESCRIPTION } from '../const';
 import { AbstractComponent } from './abstract-component';
 
 const createFilmCardTemplate = (film) => {
-  const { title, rating, date, duration, genre, srcPoster, description, comments } = film;
+  const { title, rating, date, duration, genre, srcPoster, description, countComments } = film;
 
   const year = date.getFullYear();
 
@@ -25,7 +25,7 @@ const createFilmCardTemplate = (film) => {
       </p>
       <img src="${srcPoster}" alt="" class="film-card__poster">
       <p class="film-card__description">${getShortDescription(description)}</p>
-      <a class="film-card__comments">${comments.length} comments</a>
+      <a class="film-card__comments">${countComments} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>

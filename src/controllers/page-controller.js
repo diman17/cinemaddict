@@ -1,8 +1,9 @@
 import { ShowMoreButtonComponent } from '../components/show-more-button';
-import { remove, render, renderPosition } from '../utils/render';
+import { remove, render } from '../utils/render';
 import { FilmCardComponent } from '../components/film-card';
 import { FilmDetailsComponent } from '../components/film-details';
 import { CommentComponent } from '../components/comment';
+import { cloneDeep } from 'lodash';
 
 const SHOWING_FILMS_COUNT_ON_START = 5;
 
@@ -55,9 +56,9 @@ export const renderFilm = (container, film) => {
 };
 
 export class PageController {
-  constructor(container) {
+  constructor(container, extraFilmsList) {
     this._container = container;
-
+    this._extraFilmsList = extraFilmsList;
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
@@ -65,10 +66,10 @@ export class PageController {
     let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
     for (let i = 0; i < showingFilmsCount; i++) {
-      renderFilm(this._container, films[i]);
+      renderFilm(this._container.querySelector('.films-list__container'), films[i]);
     }
 
-    render(this._container, this._showMoreButtonComponent, renderPosition.AFTER);
+    render(this._container.querySelector('.films-list'), this._showMoreButtonComponent);
 
     const showMoreFilms = () => {
       const prevFilmsCount = showingFilmsCount;
@@ -87,5 +88,20 @@ export class PageController {
     };
 
     this._showMoreButtonComponent.setClickHandler(showMoreButtonClickHandler);
+
+    const FILMS_COUNT_IN_FILMS_LIST_EXTRA = 2;
+
+    for (let i = 0; i < this._extraFilmsList.length; i++) {
+      const filmsListExtraElements = this._container.querySelectorAll('.films-list--extra');
+
+      const filmsListExtraContainer = filmsListExtraElements[i].querySelector('.films-list__container');
+
+      const sortFilms = cloneDeep(films);
+      sortFilms.sort((a, b) => b[this._extraFilmsList[i].sort] - a[this._extraFilmsList[i].sort]);
+
+      for (let j = 0; j < FILMS_COUNT_IN_FILMS_LIST_EXTRA; j++) {
+        renderFilm(filmsListExtraContainer, sortFilms[j]);
+      }
+    }
   }
 }

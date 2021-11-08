@@ -2,7 +2,7 @@ import { MONTHS } from '../const';
 import { AbstractComponent } from './abstract-component';
 
 const createFilmDetailsTemplate = (film) => {
-  const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, comments } = film;
+  const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, countComments } = film;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="form-details__top-container">
@@ -79,7 +79,7 @@ const createFilmDetailsTemplate = (film) => {
 
     <div class="form-details__bottom-container">
       <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${countComments}</span></h3>
 
         <ul class="film-details__comments-list"></ul>
 

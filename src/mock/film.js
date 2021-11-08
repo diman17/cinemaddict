@@ -87,6 +87,7 @@ const generateDate = () => {
 };
 
 export const generateFilm = () => {
+  const comments = generateComments(getRandomIntegerNumber(1, 9));
   return {
     title: getRandomArrayItem(titles),
     age: getRandomArrayItem(filmAges),
@@ -100,7 +101,8 @@ export const generateFilm = () => {
     genre: getRandomArrayItem(genres),
     srcPoster: getRandomArrayItem(srcPosters),
     description: generateDescription(description),
-    comments: generateComments(getRandomIntegerNumber(1, 6)),
+    comments: comments,
+    countComments: comments.length,
   };
 };
 
