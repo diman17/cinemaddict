@@ -29,7 +29,8 @@ const films = generateFilms(TOTAL_FILMS);
 
 const pageController = new PageController(filmsSectionComponent.getElement(), filmsSectionComponent.extraFilmsList);
 
-pageController.render(films);
+pageController.renderFilms(films);
+pageController.renderExtraFilms(films);
 
 const footerStatisticsElement = document.querySelector('.footer__statistics');
 
