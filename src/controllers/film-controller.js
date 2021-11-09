@@ -16,7 +16,22 @@ export class FilmController {
   renderFilm() {
     render(this._container, this._filmCardComponent);
 
-    const renderFilmDetails = () => {
+    const onEscKeyDown = (evt) => {
+      const isEscKey = evt.key === 'Escape' || evt.key === 'Esc';
+
+      if (isEscKey) {
+        closeFilmDetails();
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+
+    const closeFilmDetails = () => {
+      document.body.classList.remove('hide-overflow');
+      remove(this._filmDetailsComponent);
+      this._commentComponents.forEach((commentComponent) => remove(commentComponent));
+    };
+
+    const showFilmDetails = () => {
       document.body.classList.add('hide-overflow');
 
       render(document.body, this._filmDetailsComponent);
@@ -25,21 +40,22 @@ export class FilmController {
         render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
       });
 
+      document.addEventListener('keydown', onEscKeyDown);
+
       this._filmDetailsComponent.setCloseButtonClickHandler(() => {
-        document.body.classList.remove('hide-overflow');
-        remove(this._filmDetailsComponent);
-        this._commentComponents.forEach((commentComponent) => remove(commentComponent));
+        closeFilmDetails();
+        document.removeEventListener('keydown', onEscKeyDown);
       });
     };
 
     this._filmCardComponent.setPosterClickHandler(() => {
-      renderFilmDetails();
+      showFilmDetails();
     });
     this._filmCardComponent.setTitleClickHandler(() => {
-      renderFilmDetails();
+      showFilmDetails();
     });
     this._filmCardComponent.setCommentsClickHandler(() => {
-      renderFilmDetails();
+      showFilmDetails();
     });
   }
 }
