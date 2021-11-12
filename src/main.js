@@ -5,6 +5,8 @@ import { SiteStatisticsComponent } from './components/site-statistics';
 import { generateProfile } from './mock/profile';
 import { render } from './utils/render';
 import { PageController } from './controllers/page-controller';
+import { TOTAL_FILMS } from './const';
+import { NoDataSectionComponent } from './components/no-data-section';
 
 const siteHeaderElement = document.querySelector('.header');
 
@@ -16,17 +18,21 @@ const siteMainElement = document.querySelector('.main');
 
 render(siteMainElement, new SiteNavigationComponent());
 
-const filmsSectionComponent = new FilmsSectionComponent();
+if (!TOTAL_FILMS) {
+  render(siteMainElement, new NoDataSectionComponent());
+} else {
+  const filmsSectionComponent = new FilmsSectionComponent();
 
-render(siteMainElement, filmsSectionComponent);
+  render(siteMainElement, filmsSectionComponent);
 
-const pageController = new PageController(filmsSectionComponent.getElement(), filmsSectionComponent.extraFilmsList);
+  const pageController = new PageController(filmsSectionComponent.getElement(), filmsSectionComponent.extraFilmsList);
 
-pageController.renderFilms(pageController.films);
-pageController.renderShowMoreButton();
-pageController.renderExtraFilms();
-pageController.renderSort();
+  pageController.renderFilms(pageController.films);
+  pageController.renderShowMoreButton();
+  pageController.renderExtraFilms();
+  pageController.renderSort();
+}
 
 const footerStatisticsElement = document.querySelector('.footer__statistics');
 
-render(footerStatisticsElement, new SiteStatisticsComponent(pageController.films.length));
+render(footerStatisticsElement, new SiteStatisticsComponent(TOTAL_FILMS));
