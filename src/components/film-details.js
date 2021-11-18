@@ -1,8 +1,39 @@
-import { MONTHS } from '../const';
 import { AbstractComponent } from './abstract-component';
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const controls = [
+  {
+    modifier: 'watchlist',
+    text: 'Add to watchlist',
+  },
+  {
+    modifier: 'watched',
+    text: 'Already watched',
+  },
+  {
+    modifier: 'favorite',
+    text: 'Add to favorites',
+  },
+];
+
+const emojies = ['smile', 'sleeping', 'puke', 'angry'];
+
+const createControl = (modifier, text) => {
+  return `<input type="checkbox" class="film-details__control-input visually-hidden" id="${modifier}" name="${modifier}">
+    <label for="${modifier}" class="film-details__control-label film-details__control-label--${modifier}">${text}</label>`;
+};
+
+const createEmoji = (emoji) => {
+  return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
+    <label class="film-details__emoji-label" for="emoji-${emoji}">
+      <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
+    </label>`;
+};
 
 const createFilmDetailsTemplate = (film) => {
   const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, countComments } = film;
+
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="form-details__top-container">
@@ -66,14 +97,7 @@ const createFilmDetailsTemplate = (film) => {
       </div>
 
       <section class="film-details__controls">
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
-
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-        <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
-
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-        <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
+        ${controls.map((el) => createControl(el.modifier, el.text)).join('\n')}
       </section>
     </div>
 
@@ -91,25 +115,7 @@ const createFilmDetailsTemplate = (film) => {
           </label>
 
           <div class="film-details__emoji-list">
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-            <label class="film-details__emoji-label" for="emoji-smile">
-              <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-            </label>
-
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-            <label class="film-details__emoji-label" for="emoji-sleeping">
-              <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-            </label>
-
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-            <label class="film-details__emoji-label" for="emoji-puke">
-              <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-            </label>
-
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-            <label class="film-details__emoji-label" for="emoji-angry">
-              <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-            </label>
+            ${emojies.map((el) => createEmoji(el)).join('\n')}
           </div>
         </div>
       </section>

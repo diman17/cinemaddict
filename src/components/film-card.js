@@ -1,25 +1,43 @@
-import { MAX_LENGTH_OF_DESCRIPTION } from '../const';
 import { AbstractComponent } from './abstract-component';
+
+const MAX_LENGTH_OF_DESCRIPTION = 140;
+
+const controls = [
+  {
+    modifier: 'add-to-watchlist',
+    text: 'Add to watchlist',
+  },
+  {
+    modifier: 'mark-as-watched',
+    text: 'Mark as watched',
+  },
+  {
+    modifier: 'favorite',
+    text: 'Mark as favorite',
+  },
+];
+
+const createButton = (modifier, text) => {
+  return `<button class="film-card__controls-item button film-card__controls-item--${modifier}">${text}</button>`;
+};
 
 const createFilmCardTemplate = (film) => {
   const { title, rating, date, duration, genre, srcPoster, description, countComments } = film;
-
-  const year = date.getFullYear();
 
   const getShortDescription = (description) => {
     if (description.length > MAX_LENGTH_OF_DESCRIPTION) {
       description = description.split('').slice(0, MAX_LENGTH_OF_DESCRIPTION).join('');
       return description.replace(/.$/, '...');
-    } else {
-      return description;
     }
+
+    return description;
   };
 
   return `<article class="film-card">
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${year}</span>
+        <span class="film-card__year">${date.getFullYear()}</span>
         <span class="film-card__duration">${duration}</span>
         <span class="film-card__genre">${genre}</span>
       </p>
@@ -27,9 +45,7 @@ const createFilmCardTemplate = (film) => {
       <p class="film-card__description">${getShortDescription(description)}</p>
       <a class="film-card__comments">${countComments} comments</a>
       <form class="film-card__controls">
-        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-        <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+        ${controls.map((el) => createButton(el.modifier, el.text)).join('\n')}
       </form>
     </article>`;
 };

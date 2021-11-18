@@ -106,6 +106,8 @@ export const generateFilm = () => {
   };
 };
 
+export const TOTAL_FILMS = getRandomIntegerNumber(0, 31);
+
 export const generateFilms = (count) => {
   return new Array(count).fill('').map(generateFilm);
 };
