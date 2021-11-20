@@ -11,51 +11,50 @@ export class FilmController {
     this._filmCardComponent = new FilmCardComponent(film);
     this._filmDetailsComponent = new FilmDetailsComponent(film);
     this._commentComponents = film.comments.map((comment) => new CommentComponent(comment));
+
+    this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
+    this._renderFilmDetails = this._renderFilmDetails.bind(this);
   }
 
-  renderFilm() {
+  render() {
     render(this._container, this._filmCardComponent);
 
-    const onEscKeyDown = (evt) => {
-      const isEscKey = evt.key === 'Escape' || evt.key === 'Esc';
+    this._filmCardComponent.setPosterClickHandler(this._renderFilmDetails);
+    this._filmCardComponent.setTitleClickHandler(this._renderFilmDetails);
+    this._filmCardComponent.setCommentsClickHandler(this._renderFilmDetails);
+  }
 
-      if (isEscKey) {
-        closeFilmDetails();
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
+  _onEscKeyDown(evt) {
+    const isEscKey = evt.key === 'Escape' || evt.key === 'Esc';
 
-    const closeFilmDetails = () => {
-      document.body.classList.remove('hide-overflow');
-      remove(this._filmDetailsComponent);
-      this._commentComponents.forEach((commentComponent) => remove(commentComponent));
-    };
+    if (isEscKey) {
+      this._removeFilmDetails();
+      document.removeEventListener('keydown', this._onEscKeyDown);
+    }
+  }
 
-    const showFilmDetails = () => {
-      document.body.classList.add('hide-overflow');
+  _handleCloseButtonClick() {
+    this._removeFilmDetails();
+    document.removeEventListener('keydown', this._onEscKeyDown);
+  }
 
-      render(document.body, this._filmDetailsComponent);
+  _removeFilmDetails() {
+    document.body.classList.remove('hide-overflow');
+    remove(this._filmDetailsComponent);
+    this._commentComponents.forEach((commentComponent) => remove(commentComponent));
+  }
 
-      this._commentComponents.forEach((commentComponent) => {
-        render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
-      });
+  _renderFilmDetails() {
+    document.body.classList.add('hide-overflow');
 
-      document.addEventListener('keydown', onEscKeyDown);
+    render(document.body, this._filmDetailsComponent);
 
-      this._filmDetailsComponent.setCloseButtonClickHandler(() => {
-        closeFilmDetails();
-        document.removeEventListener('keydown', onEscKeyDown);
-      });
-    };
-
-    this._filmCardComponent.setPosterClickHandler(() => {
-      showFilmDetails();
+    this._commentComponents.forEach((commentComponent) => {
+      render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
     });
-    this._filmCardComponent.setTitleClickHandler(() => {
-      showFilmDetails();
-    });
-    this._filmCardComponent.setCommentsClickHandler(() => {
-      showFilmDetails();
-    });
+
+    this._filmDetailsComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
+    document.addEventListener('keydown', this._onEscKeyDown);
   }
 }
