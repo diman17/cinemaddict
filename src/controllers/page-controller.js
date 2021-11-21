@@ -60,8 +60,8 @@ export class PageController {
     this._renderShowMoreButton();
     this._renderSort();
 
-    this._renderExtraFilms(this._topRatedComponent);
-    this._renderExtraFilms(this._mostCommentedComponent);
+    this._renderExtraFilms(this._topRatedComponent, sortType.RATING);
+    this._renderExtraFilms(this._mostCommentedComponent, sortType.COUNT_COMMENTS);
   }
 
   _handleShowMoreButton() {
