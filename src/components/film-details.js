@@ -138,4 +138,16 @@ export class FilmDetailsComponent extends AbstractComponent {
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector('.film-details__close-btn').addEventListener('click', handler);
   }
+
+  setControlClickHandler(handler) {
+    this.getElement().querySelector('.film-details__controls').addEventListener('click', (evt) => {
+        evt.preventDefault();
+
+        if (evt.target.classList.contains('film-details__controls')) return;
+
+        evt.target.control.checked = evt.target.control.checked ? false : true;
+
+        handler();
+      });
+  }
 }

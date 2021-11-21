@@ -72,4 +72,20 @@ export class FilmCardComponent extends AbstractComponent {
   setCommentsClickHandler(handler) {
     this.getElement().querySelector('.film-card__comments').addEventListener('click', handler);
   }
+
+  setFormClickHandler(handler) {
+    this.getElement().querySelector('.film-card__controls').addEventListener('click', (evt) => {
+        evt.preventDefault();
+
+        if (evt.target.classList.contains('film-card__controls')) return;
+
+        if (evt.target.classList.contains('film-card__controls-item--active')) {
+          evt.target.classList.remove('film-card__controls-item--active');
+        } else {
+          evt.target.classList.add('film-card__controls-item--active');
+        }
+
+        handler();
+      });
+  }
 }

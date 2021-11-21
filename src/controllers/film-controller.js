@@ -15,6 +15,8 @@ export class FilmController {
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
     this._renderFilmDetails = this._renderFilmDetails.bind(this);
+
+    this._handleControlClick = this._handleControlClick.bind(this);
   }
 
   render() {
@@ -23,7 +25,11 @@ export class FilmController {
     this._filmCardComponent.setPosterClickHandler(this._renderFilmDetails);
     this._filmCardComponent.setTitleClickHandler(this._renderFilmDetails);
     this._filmCardComponent.setCommentsClickHandler(this._renderFilmDetails);
+
+    this._filmCardComponent.setFormClickHandler(this._handleControlClick);
   }
+
+  _handleControlClick() {}
 
   _onEscKeyDown(evt) {
     const isEscKey = evt.key === 'Escape' || evt.key === 'Esc';
@@ -56,5 +62,7 @@ export class FilmController {
 
     this._filmDetailsComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
     document.addEventListener('keydown', this._onEscKeyDown);
+
+    this._filmDetailsComponent.setControlClickHandler(this._handleControlClick);
   }
 }

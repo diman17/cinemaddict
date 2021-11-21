@@ -7,9 +7,7 @@ const text = [
   ['Fusce tristique felis at fermentum pharetra.'],
   ['Aliquam id orci ut lectus varius viverra.'],
   ['Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.'],
-  [
-    'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis.',
-  ],
+  ['Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis.'],
   ['Aliquam erat volutpat.'],
   ['Nunc fermentum tortor ac porta dapibus.'],
   ['In rutrum ac purus sit amet tempus.'],
@@ -27,13 +25,7 @@ const generateText = (text) => {
 const authors = ['Yash Hughes', 'Owen James', 'Ezekiel Roberts', 'Winifrede Adams', 'Paloma Brown', 'Luciana Hernandez'];
 
 const generateDay = () => {
-  return new Date(
-    getRandomIntegerNumber(2018, 2020),
-    getRandomIntegerNumber(0, 11),
-    getRandomIntegerNumber(1, 31),
-    getRandomIntegerNumber(0, 23),
-    getRandomIntegerNumber(0, 59),
-  );
+  return new Date(getRandomIntegerNumber(2018, 2020), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 31), getRandomIntegerNumber(0, 23), getRandomIntegerNumber(0, 59));
 };
 
 export const generateComment = () => {
@@ -41,9 +33,7 @@ export const generateComment = () => {
     srcEmoji: getRandomArrayItem(srcEmojies),
     text: generateText(text),
     author: getRandomArrayItem(authors),
-    day: `${generateDay().getFullYear()}/${
-      generateDay().getMonth() + 1
-    }/${generateDay().getDate()} ${generateDay().getHours()}:${generateDay().getMinutes()}`,
+    day: `${generateDay().getFullYear()}/${generateDay().getMonth() + 1}/${generateDay().getDate()} ${generateDay().getHours()}:${generateDay().getMinutes()}`,
   };
 };
 
