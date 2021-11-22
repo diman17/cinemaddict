@@ -1,4 +1,4 @@
-import { getRandomArrayItem, getRandomIntegerNumber } from '../utils/common';
+import { getRandomArrayItem, getRandomBoolean, getRandomIntegerNumber } from '../utils/common';
 import { generateComments } from './comment';
 
 const titles = [
@@ -101,6 +101,9 @@ export const generateFilm = () => {
     description: generateDescription(description),
     comments: comments,
     countComments: comments.length,
+    isWatchlist: getRandomBoolean(),
+    isWatched: getRandomBoolean(),
+    isFavorite: getRandomBoolean(),
   };
 };
 

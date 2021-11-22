@@ -2,27 +2,7 @@ import { AbstractComponent } from './abstract-component';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const controls = [
-  {
-    modifier: 'watchlist',
-    text: 'Add to watchlist',
-  },
-  {
-    modifier: 'watched',
-    text: 'Already watched',
-  },
-  {
-    modifier: 'favorite',
-    text: 'Add to favorites',
-  },
-];
-
 const emojies = ['smile', 'sleeping', 'puke', 'angry'];
-
-const createControl = (modifier, text) => {
-  return `<input type="checkbox" class="film-details__control-input visually-hidden" id="${modifier}" name="${modifier}">
-    <label for="${modifier}" class="film-details__control-label film-details__control-label--${modifier}">${text}</label>`;
-};
 
 const createEmoji = (emoji) => {
   return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
@@ -32,7 +12,7 @@ const createEmoji = (emoji) => {
 };
 
 const createFilmDetailsTemplate = (film) => {
-  const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, countComments } = film;
+  const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, countComments, isWatchlist, isWatched, isFavorite } = film;
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -97,7 +77,14 @@ const createFilmDetailsTemplate = (film) => {
       </div>
 
       <section class="film-details__controls">
-        ${controls.map((el) => createControl(el.modifier, el.text)).join('\n')}
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isWatchlist ? 'checked' : ''}>
+        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
+
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? 'checked' : ''}>
+        <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
+
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? 'checked' : ''}>
+        <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
       </section>
     </div>
 
@@ -139,11 +126,35 @@ export class FilmDetailsComponent extends AbstractComponent {
     this.getElement().querySelector('.film-details__close-btn').addEventListener('click', handler);
   }
 
-  setControlClickHandler(handler) {
-    this.getElement().querySelector('.film-details__controls').addEventListener('click', (evt) => {
+  setButtonWatchlistClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-details__control-label--watchlist')
+      .addEventListener('click', (evt) => {
         evt.preventDefault();
 
-        if (evt.target.classList.contains('film-details__controls')) return;
+        evt.target.control.checked = evt.target.control.checked ? false : true;
+
+        handler();
+      });
+  }
+
+  setButtonWatchedClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-details__control-label--watched')
+      .addEventListener('click', (evt) => {
+        evt.preventDefault();
+
+        evt.target.control.checked = evt.target.control.checked ? false : true;
+
+        handler();
+      });
+  }
+
+  setButtonFavoriteClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-details__control-label--favorite')
+      .addEventListener('click', (evt) => {
+        evt.preventDefault();
 
         evt.target.control.checked = evt.target.control.checked ? false : true;
 

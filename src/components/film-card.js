@@ -2,27 +2,16 @@ import { AbstractComponent } from './abstract-component';
 
 const MAX_LENGTH_OF_DESCRIPTION = 140;
 
-const controls = [
-  {
-    modifier: 'add-to-watchlist',
-    text: 'Add to watchlist',
-  },
-  {
-    modifier: 'mark-as-watched',
-    text: 'Mark as watched',
-  },
-  {
-    modifier: 'favorite',
-    text: 'Mark as favorite',
-  },
-];
-
-const createButton = (modifier, text) => {
-  return `<button class="film-card__controls-item button film-card__controls-item--${modifier}">${text}</button>`;
+const switchClass = (evt) => {
+  if (evt.target.classList.contains('film-card__controls-item--active')) {
+    evt.target.classList.remove('film-card__controls-item--active');
+  } else {
+    evt.target.classList.add('film-card__controls-item--active');
+  }
 };
 
 const createFilmCardTemplate = (film) => {
-  const { title, rating, date, duration, genre, srcPoster, description, countComments } = film;
+  const { title, rating, date, duration, genre, srcPoster, description, countComments, isWatchlist, isWatched, isFavorite } = film;
 
   const getShortDescription = (description) => {
     if (description.length > MAX_LENGTH_OF_DESCRIPTION) {
@@ -45,7 +34,11 @@ const createFilmCardTemplate = (film) => {
       <p class="film-card__description">${getShortDescription(description)}</p>
       <a class="film-card__comments">${countComments} comments</a>
       <form class="film-card__controls">
-        ${controls.map((el) => createButton(el.modifier, el.text)).join('\n')}
+        <button class="film-card__controls-item ${
+          isWatchlist ? 'film-card__controls-item--active' : ''
+        } button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
+        <button class="film-card__controls-item ${isWatched ? 'film-card__controls-item--active' : ''} button film-card__controls-item--mark-as-watched">Mark as watched</button>
+        <button class="film-card__controls-item ${isFavorite ? 'film-card__controls-item--active' : ''} button film-card__controls-item--favorite">Mark as favorite</button>
       </form>
     </article>`;
 };
@@ -73,18 +66,32 @@ export class FilmCardComponent extends AbstractComponent {
     this.getElement().querySelector('.film-card__comments').addEventListener('click', handler);
   }
 
-  setFormClickHandler(handler) {
-    this.getElement().querySelector('.film-card__controls').addEventListener('click', (evt) => {
+  setButtonWatchlistClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-card__controls-item--add-to-watchlist')
+      .addEventListener('click', (evt) => {
         evt.preventDefault();
+        switchClass(evt);
+        handler();
+      });
+  }
 
-        if (evt.target.classList.contains('film-card__controls')) return;
+  setButtonWatchedClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-card__controls-item--mark-as-watched')
+      .addEventListener('click', (evt) => {
+        evt.preventDefault();
+        switchClass(evt);
+        handler();
+      });
+  }
 
-        if (evt.target.classList.contains('film-card__controls-item--active')) {
-          evt.target.classList.remove('film-card__controls-item--active');
-        } else {
-          evt.target.classList.add('film-card__controls-item--active');
-        }
-
+  setButtonFavoriteClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-card__controls-item--favorite')
+      .addEventListener('click', (evt) => {
+        evt.preventDefault();
+        switchClass(evt);
         handler();
       });
   }
