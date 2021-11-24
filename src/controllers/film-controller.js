@@ -4,15 +4,15 @@ import { FilmDetailsComponent } from '../components/film-details';
 import { remove, render } from '../utils/render';
 
 export class FilmController {
-  constructor(container, film, onDataChange) {
+  constructor(container, onDataChange) {
     this._container = container;
 
     this._onDataChange = onDataChange;
 
-    this._film = film;
-    this._filmCardComponent = new FilmCardComponent(this._film);
-    this._filmDetailsComponent = new FilmDetailsComponent(this._film);
-    this._commentComponents = this._film.comments.map((comment) => new CommentComponent(comment));
+    this._film = null;
+    this._filmCardComponent = null;
+    this._filmDetailsComponent = null;
+    this._commentComponents = null;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
@@ -23,7 +23,10 @@ export class FilmController {
     this._handleButtonFavoriteClick = this._handleButtonFavoriteClick.bind(this);
   }
 
-  render() {
+  render(film) {
+    this._film = film;
+    this._filmCardComponent = new FilmCardComponent(this._film);
+
     render(this._container, this._filmCardComponent);
 
     this._filmCardComponent.setPosterClickHandler(this._renderFilmDetails);
@@ -33,6 +36,12 @@ export class FilmController {
     this._filmCardComponent.setButtonWatchlistClickHandler(this._handleButtonWatchlistClick);
     this._filmCardComponent.setButtonWatchedClickHandler(this._handleButtonWatchedClick);
     this._filmCardComponent.setButtonFavoriteClickHandler(this._handleButtonFavoriteClick);
+  }
+
+  rerender(film) {
+    this._film = film;
+    this._filmCardComponent.film = film;
+    this._filmCardComponent.rerender();
   }
 
   _handleButtonWatchlistClick() {
@@ -76,24 +85,34 @@ export class FilmController {
     document.removeEventListener('keydown', this._onEscKeyDown);
   }
 
-  _removeFilmDetails() {
-    document.body.classList.remove('hide-overflow');
-    remove(this._filmDetailsComponent);
+  _removeComments() {
     this._commentComponents.forEach((commentComponent) => remove(commentComponent));
   }
 
-  renderComments() {
+  _renderComments() {
+    this._commentComponents = this._film.comments.map((comment) => new CommentComponent(comment));
+
     this._commentComponents.forEach((commentComponent) => {
       render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
     });
   }
 
+  _removeFilmDetails() {
+    document.body.classList.remove('hide-overflow');
+
+    remove(this._filmDetailsComponent);
+
+    this._removeComments();
+  }
+
   _renderFilmDetails() {
     document.body.classList.add('hide-overflow');
 
+    this._filmDetailsComponent = new FilmDetailsComponent(this._film);
+
     render(document.body, this._filmDetailsComponent);
 
-    this.renderComments();
+    this._renderComments();
 
     this._filmDetailsComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
     document.addEventListener('keydown', this._onEscKeyDown);

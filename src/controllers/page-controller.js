@@ -1,5 +1,5 @@
 import { ShowMoreButtonComponent } from '../components/show-more-button';
-import { remove, render, renderPosition, replace } from '../utils/render';
+import { remove, render, renderPosition } from '../utils/render';
 import _, { cloneDeep } from 'lodash';
 import { FilmController } from './film-controller';
 import { SortComponent, sortType } from '../components/sort';
@@ -12,8 +12,8 @@ const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
 const renderFilms = (films, container, from, to, onDataChange) => {
   return films.slice(from, to).map((film) => {
-    const filmController = new FilmController(container, film, onDataChange);
-    filmController.render();
+    const filmController = new FilmController(container, onDataChange);
+    filmController.render(film);
     return filmController;
   });
 };
@@ -79,16 +79,7 @@ export class PageController {
     this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
     this._sortFilms = getSortedFilms(this._films, this._currentSortType, 0, this._showingFilmsCount);
 
-    const newFilmController = new FilmController(this._filmListContainer, this._sortFilms[index], this._onDataChange);
-    const newFilmCardComponent = newFilmController._filmCardComponent;
-    const newFilmDetailsComponent = newFilmController._filmDetailsComponent;
-
-    replace(newFilmCardComponent, this._showedFilmControllers[index]._filmCardComponent);
-    replace(newFilmDetailsComponent, this._showedFilmControllers[index]._filmDetailsComponent);
-
-    newFilmController.renderComments();
-
-    this._showedFilmControllers[index] = newFilmController;
+    this._showedFilmControllers[index].rerender(newData);
   }
 
   _handleShowMoreButton() {
