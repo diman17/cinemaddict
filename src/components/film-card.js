@@ -1,4 +1,4 @@
-import { AbstractComponent } from './abstract-component';
+import { AbstractSmartComponent } from './abstract-smart-component';
 
 const MAX_LENGTH_OF_DESCRIPTION = 140;
 
@@ -43,27 +43,43 @@ const createFilmCardTemplate = (film) => {
     </article>`;
 };
 
-export class FilmCardComponent extends AbstractComponent {
+export class FilmCardComponent extends AbstractSmartComponent {
   constructor(film) {
     super();
 
-    this._film = film;
+    this.film = film;
   }
 
   getTemplate() {
-    return createFilmCardTemplate(this._film);
+    return createFilmCardTemplate(this.film);
+  }
+
+  recoveryListeners() {
+    this.setPosterClickHandler(this._handlePosterClick);
+    this.setTitleClickHandler(this._handleTitleClick);
+    this.setCommentsClickHandler(this._handleCommentsClick);
+    this.setButtonWatchlistClickHandler(this._handleButtonWatchlistClick);
+    this.setButtonWatchedClickHandler(this._handleButtonWatchedClick);
+    this.setButtonFavoriteClickHandler(this._handleButtonFavoriteClick);
+  }
+
+  rerender() {
+    super.rerender();
   }
 
   setPosterClickHandler(handler) {
     this.getElement().querySelector('.film-card__poster').addEventListener('click', handler);
+    this._handlePosterClick = handler;
   }
 
   setTitleClickHandler(handler) {
     this.getElement().querySelector('.film-card__title').addEventListener('click', handler);
+    this._handleTitleClick = handler;
   }
 
   setCommentsClickHandler(handler) {
     this.getElement().querySelector('.film-card__comments').addEventListener('click', handler);
+    this._handleCommentsClick = handler;
   }
 
   setButtonWatchlistClickHandler(handler) {
@@ -74,6 +90,7 @@ export class FilmCardComponent extends AbstractComponent {
         switchClass(evt);
         handler();
       });
+    this._handleButtonWatchlistClick = handler;
   }
 
   setButtonWatchedClickHandler(handler) {
@@ -84,6 +101,7 @@ export class FilmCardComponent extends AbstractComponent {
         switchClass(evt);
         handler();
       });
+    this._handleButtonWatchedClick = handler;
   }
 
   setButtonFavoriteClickHandler(handler) {
@@ -94,5 +112,6 @@ export class FilmCardComponent extends AbstractComponent {
         switchClass(evt);
         handler();
       });
+    this._handleButtonFavoriteClick = handler;
   }
 }

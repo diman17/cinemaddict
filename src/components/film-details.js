@@ -129,11 +129,7 @@ export class FilmDetailsComponent extends AbstractComponent {
   setButtonWatchlistClickHandler(handler) {
     this.getElement()
       .querySelector('.film-details__control-label--watchlist')
-      .addEventListener('click', (evt) => {
-        evt.preventDefault();
-
-        evt.target.control.checked = evt.target.control.checked ? false : true;
-
+      .addEventListener('click', () => {
         handler();
       });
   }
@@ -141,11 +137,7 @@ export class FilmDetailsComponent extends AbstractComponent {
   setButtonWatchedClickHandler(handler) {
     this.getElement()
       .querySelector('.film-details__control-label--watched')
-      .addEventListener('click', (evt) => {
-        evt.preventDefault();
-
-        evt.target.control.checked = evt.target.control.checked ? false : true;
-
+      .addEventListener('click', () => {
         handler();
       });
   }
@@ -153,11 +145,7 @@ export class FilmDetailsComponent extends AbstractComponent {
   setButtonFavoriteClickHandler(handler) {
     this.getElement()
       .querySelector('.film-details__control-label--favorite')
-      .addEventListener('click', (evt) => {
-        evt.preventDefault();
-
-        evt.target.control.checked = evt.target.control.checked ? false : true;
-
+      .addEventListener('click', () => {
         handler();
       });
   }
