@@ -4,20 +4,24 @@ import { FilmDetailsComponent } from '../components/film-details';
 import { remove, render } from '../utils/render';
 
 export class FilmController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onShowFilmDetails) {
     this._container = container;
 
     this._onDataChange = onDataChange;
+    this._onShowFilmDetails = onShowFilmDetails;
+
+    this.isFilmDetailsShowing = false;
 
     this.film = null;
     this._filmCardComponent = null;
     this._filmDetailsComponent = null;
     this._commentComponents = null;
 
-    this._onEscKeyDown = this._onEscKeyDown.bind(this);
-    this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
     this._renderFilmDetails = this._renderFilmDetails.bind(this);
 
+    this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
+    this._handleFilmCardClick = this._handleFilmCardClick.bind(this);
     this._handleButtonWatchlistClick = this._handleButtonWatchlistClick.bind(this);
     this._handleButtonWatchedClick = this._handleButtonWatchedClick.bind(this);
     this._handleButtonFavoriteClick = this._handleButtonFavoriteClick.bind(this);
@@ -29,9 +33,9 @@ export class FilmController {
 
     render(this._container, this._filmCardComponent);
 
-    this._filmCardComponent.setPosterClickHandler(this._renderFilmDetails);
-    this._filmCardComponent.setTitleClickHandler(this._renderFilmDetails);
-    this._filmCardComponent.setCommentsClickHandler(this._renderFilmDetails);
+    this._filmCardComponent.setPosterClickHandler(this._handleFilmCardClick);
+    this._filmCardComponent.setTitleClickHandler(this._handleFilmCardClick);
+    this._filmCardComponent.setCommentsClickHandler(this._handleFilmCardClick);
 
     this._filmCardComponent.setButtonWatchlistClickHandler(this._handleButtonWatchlistClick);
     this._filmCardComponent.setButtonWatchedClickHandler(this._handleButtonWatchedClick);
@@ -42,6 +46,45 @@ export class FilmController {
     this.film = film;
     this._filmCardComponent.film = film;
     this._filmCardComponent.rerender();
+  }
+
+  _renderFilmDetails() {
+    document.body.classList.add('hide-overflow');
+
+    this._filmDetailsComponent = new FilmDetailsComponent(this.film);
+
+    render(document.body, this._filmDetailsComponent);
+
+    this.isFilmDetailsShowing = true;
+
+    this._renderComments();
+
+    this._filmDetailsComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
+    document.addEventListener('keydown', this._onEscKeyDown);
+
+    this._filmDetailsComponent.setButtonWatchlistClickHandler(this._handleButtonWatchlistClick);
+    this._filmDetailsComponent.setButtonWatchedClickHandler(this._handleButtonWatchedClick);
+    this._filmDetailsComponent.setButtonFavoriteClickHandler(this._handleButtonFavoriteClick);
+  }
+
+  removeFilmDetails() {
+    document.body.classList.remove('hide-overflow');
+
+    remove(this._filmDetailsComponent);
+
+    this._removeComments();
+  }
+
+  _renderComments() {
+    this._commentComponents = this.film.comments.map((comment) => new CommentComponent(comment));
+
+    this._commentComponents.forEach((commentComponent) => {
+      render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
+    });
+  }
+
+  _removeComments() {
+    this._commentComponents.forEach((commentComponent) => remove(commentComponent));
   }
 
   _handleButtonWatchlistClick() {
@@ -75,50 +118,17 @@ export class FilmController {
     const isEscKey = evt.key === 'Escape' || evt.key === 'Esc';
 
     if (isEscKey) {
-      this._removeFilmDetails();
+      this.removeFilmDetails();
       document.removeEventListener('keydown', this._onEscKeyDown);
     }
   }
 
   _handleCloseButtonClick() {
-    this._removeFilmDetails();
+    this.removeFilmDetails();
     document.removeEventListener('keydown', this._onEscKeyDown);
   }
 
-  _removeComments() {
-    this._commentComponents.forEach((commentComponent) => remove(commentComponent));
-  }
-
-  _renderComments() {
-    this._commentComponents = this.film.comments.map((comment) => new CommentComponent(comment));
-
-    this._commentComponents.forEach((commentComponent) => {
-      render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
-    });
-  }
-
-  _removeFilmDetails() {
-    document.body.classList.remove('hide-overflow');
-
-    remove(this._filmDetailsComponent);
-
-    this._removeComments();
-  }
-
-  _renderFilmDetails() {
-    document.body.classList.add('hide-overflow');
-
-    this._filmDetailsComponent = new FilmDetailsComponent(this.film);
-
-    render(document.body, this._filmDetailsComponent);
-
-    this._renderComments();
-
-    this._filmDetailsComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
-    document.addEventListener('keydown', this._onEscKeyDown);
-
-    this._filmDetailsComponent.setButtonWatchlistClickHandler(this._handleButtonWatchlistClick);
-    this._filmDetailsComponent.setButtonWatchedClickHandler(this._handleButtonWatchedClick);
-    this._filmDetailsComponent.setButtonFavoriteClickHandler(this._handleButtonFavoriteClick);
+  _handleFilmCardClick() {
+    this._onShowFilmDetails(this._renderFilmDetails);
   }
 }
