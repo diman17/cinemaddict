@@ -87,6 +87,7 @@ const generateDate = () => {
 export const generateFilm = () => {
   const comments = generateComments(getRandomIntegerNumber(1, 9));
   return {
+    id: String(new Date().getTime() + Math.random()),
     title: getRandomArrayItem(titles),
     age: getRandomArrayItem(filmAges),
     rating: generateRating(),

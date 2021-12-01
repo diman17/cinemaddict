@@ -3,10 +3,15 @@ import { SiteNavigationComponent } from './components/site-navigation';
 import { FilmsSectionComponent } from './components/films-section';
 import { SiteStatisticsComponent } from './components/site-statistics';
 import { generateProfile } from './mock/profile';
+import { FilmsModel } from './models/films';
 import { render } from './utils/render';
 import { PageController } from './controllers/page-controller';
 import { NoDataSectionComponent } from './components/no-data-section';
-import { TOTAL_FILMS } from './mock/film';
+import { generateFilms, TOTAL_FILMS } from './mock/film';
+
+const films = generateFilms(TOTAL_FILMS);
+const filmsModel = new FilmsModel();
+filmsModel.setFilms(films);
 
 const siteHeaderElement = document.querySelector('.header');
 
@@ -25,7 +30,7 @@ if (!TOTAL_FILMS) {
 
   render(siteMainElement, filmsSectionComponent);
 
-  const pageController = new PageController(filmsSectionComponent.getElement());
+  const pageController = new PageController(filmsSectionComponent.getElement(), filmsModel);
 
   pageController.render();
 }

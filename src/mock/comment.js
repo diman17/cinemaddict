@@ -30,6 +30,7 @@ const generateDay = () => {
 
 export const generateComment = () => {
   return {
+    id: String(new Date().getTime() + Math.random()),
     srcEmoji: getRandomArrayItem(srcEmojies),
     text: generateText(text),
     author: getRandomArrayItem(authors),

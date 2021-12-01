@@ -9,7 +9,7 @@ export class FilmController {
 
     this._onDataChange = onDataChange;
 
-    this._film = null;
+    this.film = null;
     this._filmCardComponent = null;
     this._filmDetailsComponent = null;
     this._commentComponents = null;
@@ -24,8 +24,8 @@ export class FilmController {
   }
 
   render(film) {
-    this._film = film;
-    this._filmCardComponent = new FilmCardComponent(this._film);
+    this.film = film;
+    this._filmCardComponent = new FilmCardComponent(this.film);
 
     render(this._container, this._filmCardComponent);
 
@@ -39,34 +39,34 @@ export class FilmController {
   }
 
   rerender(film) {
-    this._film = film;
+    this.film = film;
     this._filmCardComponent.film = film;
     this._filmCardComponent.rerender();
   }
 
   _handleButtonWatchlistClick() {
     this._onDataChange(
-      this._film,
-      Object.assign({}, this._film, {
-        isWatchlist: !this._film.isWatchlist,
+      this.film,
+      Object.assign({}, this.film, {
+        isWatchlist: !this.film.isWatchlist,
       }),
     );
   }
 
   _handleButtonWatchedClick() {
     this._onDataChange(
-      this._film,
-      Object.assign({}, this._film, {
-        isWatched: !this._film.isWatched,
+      this.film,
+      Object.assign({}, this.film, {
+        isWatched: !this.film.isWatched,
       }),
     );
   }
 
   _handleButtonFavoriteClick() {
     this._onDataChange(
-      this._film,
-      Object.assign({}, this._film, {
-        isFavorite: !this._film.isFavorite,
+      this.film,
+      Object.assign({}, this.film, {
+        isFavorite: !this.film.isFavorite,
       }),
     );
   }
@@ -90,7 +90,7 @@ export class FilmController {
   }
 
   _renderComments() {
-    this._commentComponents = this._film.comments.map((comment) => new CommentComponent(comment));
+    this._commentComponents = this.film.comments.map((comment) => new CommentComponent(comment));
 
     this._commentComponents.forEach((commentComponent) => {
       render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
@@ -108,7 +108,7 @@ export class FilmController {
   _renderFilmDetails() {
     document.body.classList.add('hide-overflow');
 
-    this._filmDetailsComponent = new FilmDetailsComponent(this._film);
+    this._filmDetailsComponent = new FilmDetailsComponent(this.film);
 
     render(document.body, this._filmDetailsComponent);
 
