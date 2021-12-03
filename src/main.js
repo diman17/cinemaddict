@@ -1,5 +1,4 @@
 import { ProfileComponent } from './components/profile';
-import { SiteNavigationComponent } from './components/site-navigation';
 import { FilmsSectionComponent } from './components/films-section';
 import { SiteStatisticsComponent } from './components/site-statistics';
 import { generateProfile } from './mock/profile';
@@ -8,6 +7,7 @@ import { render } from './utils/render';
 import { PageController } from './controllers/page-controller';
 import { NoDataSectionComponent } from './components/no-data-section';
 import { generateFilms, TOTAL_FILMS } from './mock/film';
+import { NavigationController } from './controllers/navigation-controller';
 
 const films = generateFilms(TOTAL_FILMS);
 const filmsModel = new FilmsModel();
@@ -21,7 +21,8 @@ render(siteHeaderElement, new ProfileComponent(profile));
 
 const siteMainElement = document.querySelector('.main');
 
-render(siteMainElement, new SiteNavigationComponent());
+const navigationController = new NavigationController(siteMainElement, filmsModel);
+navigationController.render();
 
 if (!TOTAL_FILMS) {
   render(siteMainElement, new NoDataSectionComponent());
