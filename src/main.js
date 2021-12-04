@@ -1,11 +1,11 @@
-import { ProfileComponent } from './components/profile';
-import { FilmsSectionComponent } from './components/films-section';
-import { SiteStatisticsComponent } from './components/site-statistics';
+import { ProfileComponent } from './components/profile-component';
+import { FilmsSectionComponent } from './components/films-section-component';
+import { FilmsCountComponent } from './components/films-count-component';
 import { generateProfile } from './mock/profile';
-import { FilmsModel } from './models/films';
+import { FilmsModel } from './models/films-model';
 import { render } from './utils/render';
 import { PageController } from './controllers/page-controller';
-import { NoDataSectionComponent } from './components/no-data-section';
+import { NoDataSectionComponent } from './components/no-data-section-component';
 import { generateFilms, TOTAL_FILMS } from './mock/film';
 import { NavigationController } from './controllers/navigation-controller';
 
@@ -38,4 +38,4 @@ if (!TOTAL_FILMS) {
 
 const footerStatisticsElement = document.querySelector('.footer__statistics');
 
-render(footerStatisticsElement, new SiteStatisticsComponent(TOTAL_FILMS));
+render(footerStatisticsElement, new FilmsCountComponent(TOTAL_FILMS));

@@ -4,7 +4,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 const emojies = ['smile', 'sleeping', 'puke', 'angry'];
 
-const createEmoji = (emoji) => {
+const createEmojiTemplate = (emoji) => {
   return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
     <label class="film-details__emoji-label" for="emoji-${emoji}">
       <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
@@ -102,7 +102,7 @@ const createFilmDetailsTemplate = (film) => {
           </label>
 
           <div class="film-details__emoji-list">
-            ${emojies.map((el) => createEmoji(el)).join('\n')}
+            ${emojies.map((el) => createEmojiTemplate(el)).join('\n')}
           </div>
         </div>
       </section>

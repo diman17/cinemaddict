@@ -1,4 +1,4 @@
-import { SiteNavigationComponent } from '../components/site-navigation';
+import { NavigationComponent } from '../components/navigation-component';
 import { render } from '../utils/render';
 
 export class NavigationController {
@@ -10,7 +10,7 @@ export class NavigationController {
   }
 
   render() {
-    this._navigationComponent = new SiteNavigationComponent(this._filmsModel.getFilmsAll());
+    this._navigationComponent = new NavigationComponent(this._filmsModel.getFilmsAll());
 
     render(this._container, this._navigationComponent);
 

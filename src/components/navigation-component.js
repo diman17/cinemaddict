@@ -36,35 +36,29 @@ const navigationItems = [
   },
 ];
 
-const createSiteNavigationItem = (href, isActive, name, filter, isCountable, count) => {
+const createNavigationItemTempalate = (href, isActive, name, filter, isCountable, count) => {
   return `<a href="${href}" class="main-navigation__item ${isActive ? 'main-navigation__item--active' : ''}" data-filter="${filter}">${name} ${
     isCountable ? `<span class="main-navigation__item-count">${count}</span>` : ''
   }</a>`;
 };
 
-const createSiteNavigationTemplate = (films) => {
+const createNavigationTemplate = (films) => {
   return `<nav class="main-navigation">
     <div class="main-navigation__items">
-      ${navigationItems.map((el) => createSiteNavigationItem(el.href, el.isActive, el.name, el.filter, el.isCountable, el.getCount(films).length)).join('\n')}
+      ${navigationItems.map((el) => createNavigationItemTempalate(el.href, el.isActive, el.name, el.filter, el.isCountable, el.getCount(films).length)).join('\n')}
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
     </nav>`;
 };
 
-export class SiteNavigationComponent extends AbstractComponent {
+export class NavigationComponent extends AbstractComponent {
   constructor(films) {
     super();
     this._films = films;
   }
   getTemplate() {
-    return createSiteNavigationTemplate(this._films);
+    return createNavigationTemplate(this._films);
   }
-
-  // updateFilterCount(filter) {
-  //   this._element.querySelectorAll('.main-navigation__item').forEach(item => {
-  //     if(item.dataset.filter === filter) {}
-  // })
-  // }
 
   setFilterLinkClickHandler(handler) {
     this._element.querySelector('.main-navigation__items').addEventListener('click', (evt) => {

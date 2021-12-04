@@ -1,13 +1,13 @@
-import { CommentComponent } from '../components/comment';
-import { FilmCardComponent } from '../components/film-card';
-import { FilmDetailsComponent } from '../components/film-details';
+import { CommentComponent } from '../components/comment-component';
+import { FilmCardComponent } from '../components/film-card-component';
+import { FilmDetailsComponent } from '../components/film-details-component';
 import { remove, render } from '../utils/render';
 
 export class FilmController {
-  constructor(container, onDataChange, onShowFilmDetails) {
+  constructor(container, onFilmChange, onShowFilmDetails) {
     this._container = container;
 
-    this._onDataChange = onDataChange;
+    this._onFilmChange = onFilmChange;
     this._onShowFilmDetails = onShowFilmDetails;
 
     this.isFilmDetailsShowing = false;
@@ -88,7 +88,7 @@ export class FilmController {
   }
 
   _handleButtonWatchlistClick() {
-    this._onDataChange(
+    this._onFilmChange(
       this.film,
       Object.assign({}, this.film, {
         isWatchlist: !this.film.isWatchlist,
@@ -97,7 +97,7 @@ export class FilmController {
   }
 
   _handleButtonWatchedClick() {
-    this._onDataChange(
+    this._onFilmChange(
       this.film,
       Object.assign({}, this.film, {
         isWatched: !this.film.isWatched,
@@ -106,7 +106,7 @@ export class FilmController {
   }
 
   _handleButtonFavoriteClick() {
-    this._onDataChange(
+    this._onFilmChange(
       this.film,
       Object.assign({}, this.film, {
         isFavorite: !this.film.isFavorite,

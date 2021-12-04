@@ -7,7 +7,7 @@ export const sortType = {
   COUNT_COMMENTS: 'countComments',
 };
 
-const createSortTemplate = () => {
+const createSortingTemplate = () => {
   return `<ul class="sort">
       <li><a href="#" class="sort__button sort__button--active" data-sort="${sortType.DEFAULT}">Sort by default</a></li>
       <li><a href="#" class="sort__button" data-sort="${sortType.DATE}">Sort by date</a></li>
@@ -15,14 +15,14 @@ const createSortTemplate = () => {
     </ul>`;
 };
 
-export class SortComponent extends AbstractComponent {
+export class SortingComponent extends AbstractComponent {
   constructor() {
     super();
 
     this._currentSortType = sortType.DEFAULT;
   }
   getTemplate() {
-    return createSortTemplate();
+    return createSortingTemplate();
   }
 
   setSortTypeChangeHandler(handler) {
