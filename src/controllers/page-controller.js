@@ -59,6 +59,9 @@ export class PageController {
 
     this._onDataChange = this._onDataChange.bind(this);
     this._onShowFilmDetails = this._onShowFilmDetails.bind(this);
+    this._onFilterChange = this._onFilterChange.bind(this);
+
+    this._filmsModel.setFilterChangeHandler(this._onFilterChange);
   }
 
   render() {
@@ -108,6 +111,14 @@ export class PageController {
         }
       });
     }
+  }
+
+  _onFilterChange() {
+    this._filmListContainer.innerHTML = '';
+
+    this._films = this._filmsModel.getFilms();
+    const newFilms = renderFilms(this._films, this._filmListContainer, 0, this._showingFilmsCount, this._onDataChange, this._onShowFilmDetails);
+    this._showedFilmControllers = [].concat(newFilms);
   }
 
   _onShowFilmDetails(cb) {
