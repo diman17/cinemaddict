@@ -7,10 +7,13 @@ export class NavigationController {
     this._filmsModel = filmsModel;
 
     this._handleFilterLinkClick = this._handleFilterLinkClick.bind(this);
+    this._onFilmChange = this._onFilmChange.bind(this);
+
+    this._filmsModel.setFilmChangeHandler(this._onFilmChange);
   }
 
   render() {
-    this._navigationComponent = new NavigationComponent(this._filmsModel.getFilmsAll());
+    this._navigationComponent = new NavigationComponent(this._filmsModel.getFilmsAll(), this._filmsModel.getFilterType());
 
     render(this._container, this._navigationComponent);
 
@@ -19,5 +22,11 @@ export class NavigationController {
 
   _handleFilterLinkClick(filterType) {
     this._filmsModel.setFilterType(filterType);
+  }
+
+  _onFilmChange() {
+    this._navigationComponent.films = this._filmsModel.getFilmsAll();
+    this._navigationComponent.currentFilterType = this._filmsModel.getFilterType();
+    this._navigationComponent.rerender();
   }
 }

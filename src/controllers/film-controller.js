@@ -4,11 +4,11 @@ import { FilmDetailsComponent } from '../components/film-details-component';
 import { remove, render } from '../utils/render';
 
 export class FilmController {
-  constructor(container, onFilmChange, onShowFilmDetails) {
+  constructor(container, onFilmChange, onFilmDetailsShow) {
     this._container = container;
 
     this._onFilmChange = onFilmChange;
-    this._onShowFilmDetails = onShowFilmDetails;
+    this._onFilmDetailsShow = onFilmDetailsShow;
 
     this.isFilmDetailsShowing = false;
 
@@ -129,6 +129,6 @@ export class FilmController {
   }
 
   _handleFilmCardClick() {
-    this._onShowFilmDetails(this._renderFilmDetails);
+    this._onFilmDetailsShow(this._renderFilmDetails);
   }
 }

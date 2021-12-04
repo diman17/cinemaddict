@@ -7,6 +7,7 @@ export class FilmsModel {
     this._currentFilterType = filterType.ALL;
 
     this._filterChangeHandlers = [];
+    this._filmChangeHandlers = [];
   }
 
   getFilms() {
@@ -28,6 +29,8 @@ export class FilmsModel {
 
     this._films = [].concat(this._films.slice(0, index), film, this._films.slice(index + 1));
 
+    this._callHandlers(this._filmChangeHandlers);
+
     return true;
   }
 
@@ -37,14 +40,18 @@ export class FilmsModel {
 
   setFilterType(filterType) {
     this._currentFilterType = filterType;
-    this.callHandlers(this._filterChangeHandlers);
+    this._callHandlers(this._filterChangeHandlers);
   }
 
   setFilterChangeHandler(handler) {
     this._filterChangeHandlers.push(handler);
   }
 
-  callHandlers(handlers) {
+  setFilmChangeHandler(handler) {
+    this._filmChangeHandlers.push(handler);
+  }
+
+  _callHandlers(handlers) {
     handlers.forEach((handler) => handler());
   }
 }

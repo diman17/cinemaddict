@@ -1,40 +1,5 @@
 import { filterType, getFilmsByAllFilter, getFilmsByFavoritesFilter, getFilmsByHistoryFilter, getFilmsByWatchlistFilter } from '../utils/filter';
-import { AbstractComponent } from './abstract-component';
-
-const navigationItems = [
-  {
-    href: '#all',
-    isActive: true,
-    name: 'All movies',
-    filter: filterType.ALL,
-    isCountable: false,
-    getCount: getFilmsByAllFilter,
-  },
-  {
-    href: '#watchlist',
-    isActive: false,
-    name: 'Watchlist',
-    filter: filterType.WATCHLIST,
-    isCountable: true,
-    getCount: getFilmsByWatchlistFilter,
-  },
-  {
-    href: '#history',
-    isActive: false,
-    name: 'History',
-    filter: filterType.HISTORY,
-    isCountable: true,
-    getCount: getFilmsByHistoryFilter,
-  },
-  {
-    href: '#favorites',
-    isActive: false,
-    name: 'Favorites',
-    filter: filterType.FAVORITES,
-    isCountable: true,
-    getCount: getFilmsByFavoritesFilter,
-  },
-];
+import { AbstractSmartComponent } from './abstract-smart-component';
 
 const createNavigationItemTempalate = (href, isActive, name, filter, isCountable, count) => {
   return `<a href="${href}" class="main-navigation__item ${isActive ? 'main-navigation__item--active' : ''}" data-filter="${filter}">${name} ${
@@ -42,7 +7,42 @@ const createNavigationItemTempalate = (href, isActive, name, filter, isCountable
   }</a>`;
 };
 
-const createNavigationTemplate = (films) => {
+const createNavigationTemplate = (films, currentFilterType) => {
+  const navigationItems = [
+    {
+      href: '#all',
+      isActive: currentFilterType === filterType.ALL,
+      name: 'All movies',
+      filter: filterType.ALL,
+      isCountable: false,
+      getCount: getFilmsByAllFilter,
+    },
+    {
+      href: '#watchlist',
+      isActive: currentFilterType === filterType.WATCHLIST,
+      name: 'Watchlist',
+      filter: filterType.WATCHLIST,
+      isCountable: true,
+      getCount: getFilmsByWatchlistFilter,
+    },
+    {
+      href: '#history',
+      isActive: currentFilterType === filterType.HISTORY,
+      name: 'History',
+      filter: filterType.HISTORY,
+      isCountable: true,
+      getCount: getFilmsByHistoryFilter,
+    },
+    {
+      href: '#favorites',
+      isActive: currentFilterType === filterType.FAVORITES,
+      name: 'Favorites',
+      filter: filterType.FAVORITES,
+      isCountable: true,
+      getCount: getFilmsByFavoritesFilter,
+    },
+  ];
+
   return `<nav class="main-navigation">
     <div class="main-navigation__items">
       ${navigationItems.map((el) => createNavigationItemTempalate(el.href, el.isActive, el.name, el.filter, el.isCountable, el.getCount(films).length)).join('\n')}
@@ -51,13 +51,23 @@ const createNavigationTemplate = (films) => {
     </nav>`;
 };
 
-export class NavigationComponent extends AbstractComponent {
-  constructor(films) {
+export class NavigationComponent extends AbstractSmartComponent {
+  constructor(films, currentFilterType) {
     super();
-    this._films = films;
+    this.films = films;
+    this.currentFilterType = currentFilterType;
   }
+
   getTemplate() {
-    return createNavigationTemplate(this._films);
+    return createNavigationTemplate(this.films, this.currentFilterType);
+  }
+
+  recoveryListeners() {
+    this.setFilterLinkClickHandler(this._handleFilterLinkClick);
+  }
+
+  rerender() {
+    super.rerender();
   }
 
   setFilterLinkClickHandler(handler) {
@@ -78,5 +88,6 @@ export class NavigationComponent extends AbstractComponent {
         handler(currentFilter);
       }
     });
+    this._handleFilterLinkClick = handler;
   }
 }
