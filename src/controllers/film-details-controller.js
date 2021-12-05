@@ -1,4 +1,5 @@
 import { CommentComponent } from '../components/comment-component';
+import { CommentsListComponent } from '../components/comments-list-component';
 import { FilmDetailsComponent } from '../components/film-details-component';
 import { remove, render } from '../utils/render';
 
@@ -21,8 +22,10 @@ export class FilmDetailsController {
     document.body.classList.add('hide-overflow');
 
     this._filmDetailsComponent = new FilmDetailsComponent(this.film);
+    this._commentsListComponent = new CommentsListComponent(this.film);
 
     render(document.body, this._filmDetailsComponent);
+    render(this._filmDetailsComponent.getElement().querySelector('.form-details__bottom-container'), this._commentsListComponent);
 
     this.isShowing = true;
 
@@ -39,6 +42,7 @@ export class FilmDetailsController {
     document.body.classList.remove('hide-overflow');
 
     remove(this._filmDetailsComponent);
+    remove(this._commentsListComponent);
 
     this.isShowing = false;
 
@@ -58,7 +62,7 @@ export class FilmDetailsController {
     this._commentComponents = this.film.comments.map((comment) => new CommentComponent(comment));
 
     this._commentComponents.forEach((commentComponent) => {
-      render(this._filmDetailsComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
+      render(this._commentsListComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
     });
   }
 
