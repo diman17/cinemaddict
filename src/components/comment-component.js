@@ -28,4 +28,13 @@ export class CommentComponent extends AbstractComponent {
   getTemplate() {
     return createCommentTemplate(this._comment);
   }
+
+  setDeleteButtonClickHandler(handler) {
+    this.getElement()
+      .querySelector('.film-details__comment-delete')
+      .addEventListener('click', (evt) => {
+        evt.preventDefault();
+        handler();
+      });
+  }
 }

@@ -40,4 +40,15 @@ export class CommentsListComponent extends AbstractComponent {
   getTemplate() {
     return createCommentsListTemplate(this.film);
   }
+
+  setEmojiesClickHandler() {
+    this.getElement()
+      .querySelectorAll('.film-details__emoji-label')
+      .forEach((element) => {
+        element.addEventListener('click', (evt) => {
+          const emojiImgHTML = evt.target.outerHTML.replace(/width="\d+" height="\d+"/, 'width="55" height="55"');
+          this.getElement().querySelector('.film-details__add-emoji-label').innerHTML = emojiImgHTML;
+        });
+      });
+  }
 }

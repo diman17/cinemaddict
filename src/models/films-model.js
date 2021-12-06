@@ -8,6 +8,7 @@ export class FilmsModel {
 
     this._filterChangeHandlers = [];
     this._filmChangeHandlers = [];
+    this._commentChangeHandlers = [];
   }
 
   getFilms() {
@@ -43,12 +44,31 @@ export class FilmsModel {
     this._callHandlers(this._filterChangeHandlers);
   }
 
+  deleteComment(commentId, filmId) {
+    this._films.forEach((film) => {
+      if (film.id === filmId) {
+        film.comments.forEach((comment, i) => {
+          if (comment.id === commentId) {
+            film.comments.splice(i, 1);
+            film.countComments = film.comments.length;
+          }
+        });
+      }
+    });
+
+    this._callHandlers(this._commentChangeHandlers);
+  }
+
   setFilterChangeHandler(handler) {
     this._filterChangeHandlers.push(handler);
   }
 
   setFilmChangeHandler(handler) {
     this._filmChangeHandlers.push(handler);
+  }
+
+  setCommentChangeHandler(handler) {
+    this._commentChangeHandlers.push(handler);
   }
 
   _callHandlers(handlers) {

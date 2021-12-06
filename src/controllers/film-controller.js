@@ -3,8 +3,9 @@ import { render } from '../utils/render';
 import { FilmDetailsController } from './film-details-controller';
 
 export class FilmController {
-  constructor(container, onFilmChange, onFilmDetailsShow) {
+  constructor(container, filmsModel, onFilmChange, onFilmDetailsShow) {
     this._container = container;
+    this._filmsModel = filmsModel;
     this._onFilmChange = onFilmChange;
     this._onFilmDetailsShow = onFilmDetailsShow;
 
@@ -17,12 +18,15 @@ export class FilmController {
     this._handleButtonWatchlistClick = this._handleButtonWatchlistClick.bind(this);
     this._handleButtonWatchedClick = this._handleButtonWatchedClick.bind(this);
     this._handleButtonFavoriteClick = this._handleButtonFavoriteClick.bind(this);
+
+    this._onCommentChange = this._onCommentChange.bind(this);
+    this._filmsModel.setCommentChangeHandler(this._onCommentChange);
   }
 
   render(film) {
     this.film = film;
     this._filmCardComponent = new FilmCardComponent(this.film);
-    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._onFilmChange);
+    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._onFilmChange);
 
     render(this._container, this._filmCardComponent);
 
@@ -40,6 +44,14 @@ export class FilmController {
     this.filmDetailsController.film = film;
     this._filmCardComponent.film = film;
     this._filmCardComponent.rerender();
+  }
+
+  _onCommentChange() {
+    this._filmsModel.getFilmsAll().forEach((film) => {
+      if (film.id === this.film.id) {
+        this.rerender(film);
+      }
+    });
   }
 
   _handleButtonWatchlistClick() {

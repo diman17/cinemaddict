@@ -1,12 +1,12 @@
-import { CommentComponent } from '../components/comment-component';
-import { CommentsListComponent } from '../components/comments-list-component';
 import { FilmDetailsComponent } from '../components/film-details-component';
 import { remove, render } from '../utils/render';
+import { CommentsListController } from './comments-list-controller';
 
 export class FilmDetailsController {
-  constructor(container, film, onFilmChange) {
+  constructor(container, film, filmsModel, onFilmChange) {
     this._container = container;
     this.film = film;
+    this._filmsModel = filmsModel;
     this._onFilmChange = onFilmChange;
 
     this.isShowing = false;
@@ -22,14 +22,14 @@ export class FilmDetailsController {
     document.body.classList.add('hide-overflow');
 
     this._filmDetailsComponent = new FilmDetailsComponent(this.film);
-    this._commentsListComponent = new CommentsListComponent(this.film);
+
+    const commentsListContainer = this._filmDetailsComponent.getElement().querySelector('.form-details__bottom-container');
+    this._commentsListController = new CommentsListController(commentsListContainer, this.film, this._filmsModel);
 
     render(document.body, this._filmDetailsComponent);
-    render(this._filmDetailsComponent.getElement().querySelector('.form-details__bottom-container'), this._commentsListComponent);
-
     this.isShowing = true;
 
-    this._renderComments();
+    this._commentsListController.render();
 
     this._filmDetailsComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
     this._filmDetailsComponent.setButtonWatchlistClickHandler(this._handleButtonWatchlistClick);
@@ -41,12 +41,10 @@ export class FilmDetailsController {
   remove() {
     document.body.classList.remove('hide-overflow');
 
+    this._commentsListController.remove();
     remove(this._filmDetailsComponent);
-    remove(this._commentsListComponent);
 
     this.isShowing = false;
-
-    this._removeComments();
   }
 
   _onEscKeyDown(evt) {
@@ -56,18 +54,6 @@ export class FilmDetailsController {
       this.remove();
       document.removeEventListener('keydown', this._onEscKeyDown);
     }
-  }
-
-  _renderComments() {
-    this._commentComponents = this.film.comments.map((comment) => new CommentComponent(comment));
-
-    this._commentComponents.forEach((commentComponent) => {
-      render(this._commentsListComponent.getElement().querySelector('.film-details__comments-list'), commentComponent);
-    });
-  }
-
-  _removeComments() {
-    this._commentComponents.forEach((commentComponent) => remove(commentComponent));
   }
 
   _handleButtonWatchlistClick() {
