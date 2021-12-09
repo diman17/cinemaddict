@@ -4,7 +4,6 @@ export const sortType = {
   DEFAULT: 'default',
   DATE: 'date',
   RATING: 'rating',
-  COUNT_COMMENTS: 'countComments',
 };
 
 const createSortingTemplate = () => {

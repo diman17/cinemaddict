@@ -3,8 +3,6 @@ import { remove, render, renderPosition } from '../utils/render';
 import _, { cloneDeep } from 'lodash';
 import { FilmController } from './film-controller';
 import { SortingComponent, sortType } from '../components/sorting-component';
-import { EXTRA_FILMS, FILMS_COUNT_IN_FILMS_LIST_EXTRA } from '../components/extra-films-section-component';
-import { ExtraFilmsSectionComponent } from '../components/extra-films-section-component';
 
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -26,9 +24,6 @@ export class PageController {
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
     this._sortingComponent = new SortingComponent();
 
-    this._topRatedComponent = new ExtraFilmsSectionComponent(EXTRA_FILMS[0]);
-    this._mostCommentedComponent = new ExtraFilmsSectionComponent(EXTRA_FILMS[1]);
-
     this._handleShowMoreButton = this._handleShowMoreButton.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
 
@@ -48,9 +43,6 @@ export class PageController {
     this._showedFilmControllers = this._showedFilmControllers.concat(newFilms);
 
     this._renderSort();
-
-    this._renderExtraFilms(this._topRatedComponent, sortType.RATING);
-    this._renderExtraFilms(this._mostCommentedComponent, sortType.COUNT_COMMENTS);
   }
 
   _renderShowMoreButton() {
@@ -70,23 +62,6 @@ export class PageController {
     this._sortingComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
-  _renderExtraFilms(component, sorting) {
-    this._films = this._filmsModel.getFilms();
-
-    const extraFilms = this._getExtraFilms(this._films, sorting, FILMS_COUNT_IN_FILMS_LIST_EXTRA);
-
-    render(this._container, component);
-    this._renderFilms(
-      extraFilms,
-      component.getElement().querySelector('.films-list__container'),
-      0,
-      extraFilms.length,
-      this._filmsModel,
-      this._onFilmChange,
-      this._onFilmDetailsShow,
-    );
-  }
-
   _renderFilms(films, container, from, to, filmsModel, onFilmChange, onFilmDetailsShow) {
     return films.slice(from, to).map((film) => {
       const filmController = new FilmController(container, filmsModel, onFilmChange, onFilmDetailsShow);
@@ -104,12 +79,6 @@ export class PageController {
       sortedFilms = showingFilms.sort((a, b) => b[sort] - a[sort]);
     }
     return sortedFilms.slice(from, to);
-  }
-
-  _getExtraFilms(films, sort, count) {
-    let sortedFilms = cloneDeep(films);
-    sortedFilms.sort((a, b) => b[sort] - a[sort]);
-    return sortedFilms.slice(0, count);
   }
 
   _onFilmChange(oldFilm, newFilm) {

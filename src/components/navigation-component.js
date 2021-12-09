@@ -44,10 +44,9 @@ const createNavigationTemplate = (films, currentFilterType) => {
   ];
 
   return `<nav class="main-navigation">
-    <div class="main-navigation__items">
-      ${navigationItems.map((el) => createNavigationItemTempalate(el.href, el.isActive, el.name, el.filter, el.isCountable, el.getCount(films).length)).join('\n')}
-    </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
+      <div class="main-navigation__items">
+        ${navigationItems.map((el) => createNavigationItemTempalate(el.href, el.isActive, el.name, el.filter, el.isCountable, el.getCount(films).length)).join('\n')}
+      </div>
     </nav>`;
 };
 
