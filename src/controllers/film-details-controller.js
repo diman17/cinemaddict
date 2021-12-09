@@ -9,6 +9,8 @@ export class FilmDetailsController {
     this._filmsModel = filmsModel;
     this._onFilmChange = onFilmChange;
 
+    this._filmDetailsComponent = new FilmDetailsComponent(this.film);
+
     this.isShowing = false;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -20,8 +22,6 @@ export class FilmDetailsController {
 
   render() {
     document.body.classList.add('hide-overflow');
-
-    this._filmDetailsComponent = new FilmDetailsComponent(this.film);
 
     const commentsListContainer = this._filmDetailsComponent.getElement().querySelector('.form-details__bottom-container');
     this._commentsListController = new CommentsListController(commentsListContainer, this.film, this._filmsModel);

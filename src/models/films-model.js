@@ -19,6 +19,10 @@ export class FilmsModel {
     return this._films;
   }
 
+  getFilmById(id) {
+    return this._films.find((film) => film.id === id);
+  }
+
   setFilms(films) {
     this._films = Array.from(films);
   }

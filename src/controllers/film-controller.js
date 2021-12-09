@@ -1,5 +1,5 @@
 import { FilmCardComponent } from '../components/film-card-component';
-import { render } from '../utils/render';
+import { remove, render } from '../utils/render';
 import { FilmDetailsController } from './film-details-controller';
 
 export class FilmController {
@@ -8,11 +8,6 @@ export class FilmController {
     this._filmsModel = filmsModel;
     this._onFilmChange = onFilmChange;
     this._onFilmDetailsShow = onFilmDetailsShow;
-
-    this.film = null;
-    this._filmCardComponent = null;
-
-    this.filmDetailsController = null;
 
     this._handleFilmCardClick = this._handleFilmCardClick.bind(this);
     this._handleButtonWatchlistClick = this._handleButtonWatchlistClick.bind(this);
@@ -41,9 +36,13 @@ export class FilmController {
 
   rerender(film) {
     this.film = film;
-    this.filmDetailsController.film = film;
+    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._onFilmChange);
     this._filmCardComponent.film = film;
     this._filmCardComponent.rerender();
+  }
+
+  destroy() {
+    remove(this._filmCardComponent);
   }
 
   _onCommentChange() {

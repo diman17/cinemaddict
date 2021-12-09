@@ -38,7 +38,8 @@ export class CommentsListController {
 
   _onCommentDelete(commentId) {
     this._filmsModel.deleteComment(commentId, this._film.id);
-    this._container.innerHTML = '';
+    this._film = this._filmsModel.getFilmById(this._film.id);
+    this.remove();
     this.render();
   }
 }

@@ -127,9 +127,9 @@ export class PageController {
   }
 
   _onFilterChange() {
-    this._filmListContainer.innerHTML = '';
-
     this._films = this._filmsModel.getFilms();
+
+    this._showedFilmControllers.forEach((controller) => controller.destroy());
 
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
@@ -174,7 +174,7 @@ export class PageController {
   _handleSortTypeChange(currentSortType) {
     this._films = this._filmsModel.getFilms();
 
-    this._filmListContainer.innerHTML = '';
+    this._showedFilmControllers.forEach((controller) => controller.destroy());
 
     this._currentSortType = currentSortType;
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
