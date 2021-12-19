@@ -20,7 +20,7 @@ export class FilmsModel {
   }
 
   getFilmById(id) {
-    return this._films.find((film) => film.id === id);
+    return this._films.find((film) => film._id === id);
   }
 
   setFilms(films) {
@@ -28,7 +28,7 @@ export class FilmsModel {
   }
 
   updateFilm(id, film) {
-    const index = this._films.findIndex((film) => film.id === id);
+    const index = this._films.findIndex((film) => film._id === id);
 
     if (index === -1) return;
 
@@ -50,9 +50,9 @@ export class FilmsModel {
 
   deleteComment(commentId, filmId) {
     this._films.forEach((film) => {
-      if (film.id === filmId) {
+      if (film._id === filmId) {
         film.comments.forEach((comment, i) => {
-          if (comment.id === commentId) {
+          if (comment._id === commentId) {
             film.comments.splice(i, 1);
             film.countComments = film.comments.length;
           }

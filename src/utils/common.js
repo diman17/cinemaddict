@@ -10,3 +10,8 @@ export const getRandomArrayItem = (array) => {
 export const getRandomBoolean = () => {
   return Math.random() < 0.5;
 };
+
+export const getFormatDuration = (duration) => {
+  const HOUR = 60;
+  return `${Math.floor(duration / HOUR)}h ${duration % HOUR}m`;
+};

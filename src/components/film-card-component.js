@@ -1,3 +1,4 @@
+import { getFormatDuration } from '../utils/common';
 import { AbstractSmartComponent } from './abstract-smart-component';
 
 const MAX_LENGTH_OF_DESCRIPTION = 140;
@@ -11,7 +12,7 @@ const switchClass = (evt) => {
 };
 
 const createFilmCardTemplate = (film) => {
-  const { title, rating, date, duration, genre, srcPoster, description, countComments, isWatchlist, isWatched, isFavorite } = film;
+  const { title, rating, date, duration, genre, srcPoster, description, isWatchlist, isWatched, isFavorite } = film;
 
   const getShortDescription = (description) => {
     if (description.length > MAX_LENGTH_OF_DESCRIPTION) {
@@ -26,13 +27,13 @@ const createFilmCardTemplate = (film) => {
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${date.getFullYear()}</span>
-        <span class="film-card__duration">${duration}</span>
+        <span class="film-card__year">${new Date(date).getFullYear()}</span>
+        <span class="film-card__duration">${getFormatDuration(duration)}</span>
         <span class="film-card__genre">${genre}</span>
       </p>
       <img src="${srcPoster}" alt="" class="film-card__poster">
       <p class="film-card__description">${getShortDescription(description)}</p>
-      <a class="film-card__comments">${countComments} comments</a>
+      <a class="film-card__comments">${film.comments.length} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item ${
           isWatchlist ? 'film-card__controls-item--active' : ''

@@ -3,9 +3,10 @@ import { remove, render } from '../utils/render';
 import { FilmDetailsController } from './film-details-controller';
 
 export class FilmController {
-  constructor(container, filmsModel, onFilmChange, onFilmDetailsShow) {
+  constructor(container, filmsModel, api, onFilmChange, onFilmDetailsShow) {
     this._container = container;
     this._filmsModel = filmsModel;
+    this._api = api;
     this._onFilmChange = onFilmChange;
     this._onFilmDetailsShow = onFilmDetailsShow;
 
@@ -21,7 +22,7 @@ export class FilmController {
   render(film) {
     this.film = film;
     this._filmCardComponent = new FilmCardComponent(this.film);
-    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._onFilmChange);
+    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._api, this._onFilmChange);
 
     render(this._container, this._filmCardComponent);
 
@@ -36,7 +37,7 @@ export class FilmController {
 
   rerender(film) {
     this.film = film;
-    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._onFilmChange);
+    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._api, this._onFilmChange);
     this._filmCardComponent.film = film;
     this._filmCardComponent.rerender();
   }
@@ -47,7 +48,7 @@ export class FilmController {
 
   _onCommentChange() {
     this._filmsModel.getFilmsAll().forEach((film) => {
-      if (film.id === this.film.id) {
+      if (film._id === this.film._id) {
         this.rerender(film);
       }
     });

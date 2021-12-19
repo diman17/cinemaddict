@@ -1,6 +1,6 @@
 import { ShowMoreButtonComponent } from '../components/show-more-button-component';
 import { remove, render, renderPosition } from '../utils/render';
-import _, { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { FilmController } from './film-controller';
 import { SortingComponent, sortType } from '../components/sorting-component';
 
@@ -8,11 +8,12 @@ const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
 export class PageController {
-  constructor(container, filmsModel) {
+  constructor(container, filmsModel, api) {
     this._container = container;
     this._filmListContainer = this._container.querySelector('.films-list__container');
 
     this._filmsModel = filmsModel;
+    this._api = api;
 
     this._films = [];
     this._showedFilmControllers = [];
@@ -36,7 +37,7 @@ export class PageController {
 
   render() {
     this._films = this._filmsModel.getFilms();
-    const newFilms = this._renderFilms(this._films, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._onFilmChange, this._onFilmDetailsShow);
+    const newFilms = this._renderFilms(this._films, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._api, this._onFilmChange, this._onFilmDetailsShow);
 
     this._renderShowMoreButton();
 
@@ -62,9 +63,9 @@ export class PageController {
     this._sortingComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
-  _renderFilms(films, container, from, to, filmsModel, onFilmChange, onFilmDetailsShow) {
+  _renderFilms(films, container, from, to, filmsModel, api, onFilmChange, onFilmDetailsShow) {
     return films.slice(from, to).map((film) => {
-      const filmController = new FilmController(container, filmsModel, onFilmChange, onFilmDetailsShow);
+      const filmController = new FilmController(container, filmsModel, api, onFilmChange, onFilmDetailsShow);
       filmController.render(film);
       return filmController;
     });
@@ -81,18 +82,20 @@ export class PageController {
     return sortedFilms.slice(from, to);
   }
 
-  _onFilmChange(oldFilm, newFilm) {
-    const isSuccess = this._filmsModel.updateFilm(oldFilm.id, newFilm);
+  _onFilmChange(oldFilm, updateFilm) {
+    this._api.updateFilm(oldFilm._id, updateFilm).then((updateFilm) => {
+      const isSuccess = this._filmsModel.updateFilm(oldFilm._id, updateFilm);
 
-    if (isSuccess) {
-      this._films = this._filmsModel.getFilms();
+      if (isSuccess) {
+        this._films = this._filmsModel.getFilms();
 
-      this._showedFilmControllers.forEach((filmController) => {
-        if (_.isEqual(filmController.film, oldFilm)) {
-          filmController.rerender(newFilm);
-        }
-      });
-    }
+        this._showedFilmControllers.forEach((filmController) => {
+          if (filmController.film._id === oldFilm._id) {
+            filmController.rerender(updateFilm);
+          }
+        });
+      }
+    });
   }
 
   _onFilterChange() {
@@ -103,7 +106,7 @@ export class PageController {
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
     const sortedFilms = this._getSortedFilms(this._films, this._currentSortType, 0, this._showingFilmsCount);
-    const newFilms = this._renderFilms(sortedFilms, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._onFilmChange, this._onFilmDetailsShow);
+    const newFilms = this._renderFilms(sortedFilms, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._api, this._onFilmChange, this._onFilmDetailsShow);
 
     this._renderShowMoreButton();
 
@@ -130,6 +133,7 @@ export class PageController {
       this._prevFilmsCount,
       this._showingFilmsCount,
       this._filmsModel,
+      this._api,
       this._onFilmChange,
       this._onFilmDetailsShow,
     );
@@ -149,7 +153,7 @@ export class PageController {
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
     const sortedFilms = this._getSortedFilms(this._films, this._currentSortType, 0, this._showingFilmsCount);
-    const newFilms = this._renderFilms(sortedFilms, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._onFilmChange, this._onFilmDetailsShow);
+    const newFilms = this._renderFilms(sortedFilms, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._api, this._onFilmChange, this._onFilmDetailsShow);
 
     this._renderShowMoreButton();
 

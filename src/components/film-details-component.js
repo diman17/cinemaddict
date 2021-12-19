@@ -1,9 +1,17 @@
+import { getFormatDuration } from '../utils/common';
 import { AbstractComponent } from './abstract-component';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const createFilmDetailsTemplate = (film) => {
   const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, isWatchlist, isWatched, isFavorite } = film;
+
+  const getWritters = (writters) => {
+    if (writters.length === 1) {
+      return writters[0];
+    }
+    return writters.join(', ');
+  };
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -37,7 +45,7 @@ const createFilmDetailsTemplate = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${writters.join(', ')}</td>
+              <td class="film-details__cell">${getWritters(writters)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
@@ -45,11 +53,11 @@ const createFilmDetailsTemplate = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}</td>
+              <td class="film-details__cell">${new Date(date).getDate()} ${MONTHS[new Date(date).getMonth()]} ${new Date(date).getFullYear()}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${duration}</td>
+              <td class="film-details__cell">${getFormatDuration(duration)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>

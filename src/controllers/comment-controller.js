@@ -22,6 +22,6 @@ export class CommentController {
   }
 
   _handleDeleteButtonClick() {
-    this._onCommentDelete(this._comment.id);
+    this._onCommentDelete(this._comment._id);
   }
 }

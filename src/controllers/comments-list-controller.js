@@ -3,10 +3,11 @@ import { remove, render } from '../utils/render';
 import { CommentController } from './comment-controller';
 
 export class CommentsListController {
-  constructor(container, film, filmsModel) {
+  constructor(container, film, filmsModel, api) {
     this._container = container;
     this._film = film;
     this._filmsModel = filmsModel;
+    this._api = api;
 
     this._onCommentDelete = this._onCommentDelete.bind(this);
   }
@@ -37,9 +38,11 @@ export class CommentsListController {
   }
 
   _onCommentDelete(commentId) {
-    this._filmsModel.deleteComment(commentId, this._film.id);
-    this._film = this._filmsModel.getFilmById(this._film.id);
-    this.remove();
-    this.render();
+    this._api.deleteComment(this._film._id, commentId).then(() => {
+      this._filmsModel.deleteComment(commentId, this._film._id);
+      this._film = this._filmsModel.getFilmById(this._film._id);
+      this.remove();
+      this.render();
+    });
   }
 }

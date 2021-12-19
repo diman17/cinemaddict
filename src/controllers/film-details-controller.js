@@ -3,10 +3,11 @@ import { remove, render } from '../utils/render';
 import { CommentsListController } from './comments-list-controller';
 
 export class FilmDetailsController {
-  constructor(container, film, filmsModel, onFilmChange) {
+  constructor(container, film, filmsModel, api, onFilmChange) {
     this._container = container;
     this.film = film;
     this._filmsModel = filmsModel;
+    this._api = api;
     this._onFilmChange = onFilmChange;
 
     this._filmDetailsComponent = new FilmDetailsComponent(this.film);
@@ -24,7 +25,7 @@ export class FilmDetailsController {
     document.body.classList.add('hide-overflow');
 
     const commentsListContainer = this._filmDetailsComponent.getElement().querySelector('.form-details__bottom-container');
-    this._commentsListController = new CommentsListController(commentsListContainer, this.film, this._filmsModel);
+    this._commentsListController = new CommentsListController(commentsListContainer, this.film, this._filmsModel, this._api);
 
     render(document.body, this._filmDetailsComponent);
     this.isShowing = true;

@@ -5,37 +5,44 @@ import { generateProfile } from './mock/profile';
 import { FilmsModel } from './models/films-model';
 import { render } from './utils/render';
 import { PageController } from './controllers/page-controller';
-import { NoDataSectionComponent } from './components/no-data-section-component';
-import { generateFilms, TOTAL_FILMS } from './mock/film';
 import { NavigationController } from './controllers/navigation-controller';
+import { API } from './api/api';
+import { PreloadController } from './controllers/preload-controller';
 
-const films = generateFilms(TOTAL_FILMS);
+const api = new API();
 const filmsModel = new FilmsModel();
-filmsModel.setFilms(films);
 
-const siteHeaderElement = document.querySelector('.header');
+const headerElement = document.querySelector('.header');
 
 const profile = generateProfile();
+render(headerElement, new ProfileComponent(profile));
 
-render(siteHeaderElement, new ProfileComponent(profile));
+const mainElement = document.querySelector('.main');
+const footerElement = document.querySelector('.footer__statistics');
 
-const siteMainElement = document.querySelector('.main');
+const preloadController = new PreloadController(mainElement, footerElement);
+preloadController.render();
 
-const navigationController = new NavigationController(siteMainElement, filmsModel);
-navigationController.render();
+api
+  .getFilmsAll()
+  .then((films) => {
+    filmsModel.setFilms(films);
 
-if (!TOTAL_FILMS) {
-  render(siteMainElement, new NoDataSectionComponent());
-} else {
-  const filmsSectionComponent = new FilmsSectionComponent();
+    return films;
+  })
+  .then((films) => {
+    preloadController.remove();
+    const navigationController = new NavigationController(mainElement, filmsModel);
+    navigationController.render();
 
-  render(siteMainElement, filmsSectionComponent);
+    return films;
+  })
+  .then((films) => {
+    const filmsSectionComponent = new FilmsSectionComponent();
+    render(mainElement, filmsSectionComponent);
 
-  const pageController = new PageController(filmsSectionComponent.getElement(), filmsModel);
+    const pageController = new PageController(filmsSectionComponent.getElement(), filmsModel, api);
+    pageController.render();
 
-  pageController.render();
-}
-
-const footerStatisticsElement = document.querySelector('.footer__statistics');
-
-render(footerStatisticsElement, new FilmsCountComponent(TOTAL_FILMS));
+    render(footerElement, new FilmsCountComponent(films.length));
+  });

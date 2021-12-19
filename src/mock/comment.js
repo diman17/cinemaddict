@@ -22,19 +22,38 @@ const generateText = (text) => {
   return Array.from(result).join(' ');
 };
 
-const authors = ['Yash Hughes', 'Owen James', 'Ezekiel Roberts', 'Winifrede Adams', 'Paloma Brown', 'Luciana Hernandez'];
+const authors = [
+  'Yash Hughes',
+  'Owen James',
+  'Ezekiel Roberts',
+  'Winifrede Adams',
+  'Paloma Brown',
+  'Luciana Hernandez',
+  'Branson Kelly',
+  'Quinnton Turner',
+  'Jase Martinez',
+  'Hugo Griffin',
+  'Ingrid Green',
+  'Dina Robinson',
+  'Ember Collins',
+];
 
 const generateDay = () => {
-  return new Date(getRandomIntegerNumber(2018, 2020), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 31), getRandomIntegerNumber(0, 23), getRandomIntegerNumber(0, 59));
+  return new Date(
+    getRandomIntegerNumber(2019, 2021),
+    getRandomIntegerNumber(0, 11),
+    getRandomIntegerNumber(1, 31),
+    getRandomIntegerNumber(0, 23),
+    getRandomIntegerNumber(0, 59),
+  ).getTime();
 };
 
 export const generateComment = () => {
   return {
-    id: String(new Date().getTime() + Math.random()),
     srcEmoji: getRandomArrayItem(srcEmojies),
     text: generateText(text),
     author: getRandomArrayItem(authors),
-    day: `${generateDay().getFullYear()}/${generateDay().getMonth() + 1}/${generateDay().getDate()} ${generateDay().getHours()}:${generateDay().getMinutes()}`,
+    day: generateDay(),
   };
 };
 
