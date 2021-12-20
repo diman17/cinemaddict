@@ -1,7 +1,6 @@
 import { ProfileComponent } from './components/profile-component';
 import { FilmsSectionComponent } from './components/films-section-component';
 import { FilmsCountComponent } from './components/films-count-component';
-import { generateProfile } from './mock/profile';
 import { FilmsModel } from './models/films-model';
 import { render } from './utils/render';
 import { PageController } from './controllers/page-controller';
@@ -13,10 +12,6 @@ const api = new API();
 const filmsModel = new FilmsModel();
 
 const headerElement = document.querySelector('.header');
-
-const profile = generateProfile();
-render(headerElement, new ProfileComponent(profile));
-
 const mainElement = document.querySelector('.main');
 const footerElement = document.querySelector('.footer__statistics');
 
@@ -38,6 +33,8 @@ api
     return films;
   })
   .then((films) => {
+    render(headerElement, new ProfileComponent(films));
+
     const filmsSectionComponent = new FilmsSectionComponent();
     render(mainElement, filmsSectionComponent);
 
