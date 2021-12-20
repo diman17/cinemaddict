@@ -22,7 +22,13 @@ export class FilmController {
   render(film) {
     this.film = film;
     this._filmCardComponent = new FilmCardComponent(this.film);
-    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._api, this._onFilmChange);
+    this.filmDetailsController = new FilmDetailsController(
+      document.body,
+      this.film,
+      this._filmsModel,
+      this._api,
+      this._onFilmChange,
+    );
 
     render(this._container, this._filmCardComponent);
 
@@ -37,7 +43,13 @@ export class FilmController {
 
   rerender(film) {
     this.film = film;
-    this.filmDetailsController = new FilmDetailsController(document.body, this.film, this._filmsModel, this._api, this._onFilmChange);
+    this.filmDetailsController = new FilmDetailsController(
+      document.body,
+      this.film,
+      this._filmsModel,
+      this._api,
+      this._onFilmChange,
+    );
     this._filmCardComponent.film = film;
     this._filmCardComponent.rerender();
   }
@@ -55,30 +67,15 @@ export class FilmController {
   }
 
   _handleButtonWatchlistClick() {
-    this._onFilmChange(
-      this.film,
-      Object.assign({}, this.film, {
-        isWatchlist: !this.film.isWatchlist,
-      }),
-    );
+    this._onFilmChange(this.film, { ...this.film, isWatchlist: !this.film.isWatchlist });
   }
 
   _handleButtonWatchedClick() {
-    this._onFilmChange(
-      this.film,
-      Object.assign({}, this.film, {
-        isWatched: !this.film.isWatched,
-      }),
-    );
+    this._onFilmChange(this.film, { ...this.film, isWatched: !this.film.isWatched });
   }
 
   _handleButtonFavoriteClick() {
-    this._onFilmChange(
-      this.film,
-      Object.assign({}, this.film, {
-        isFavorite: !this.film.isFavorite,
-      }),
-    );
+    this._onFilmChange(this.film, { ...this.film, isFavorite: !this.film.isFavorite });
   }
 
   _handleFilmCardClick() {

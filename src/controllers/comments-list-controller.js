@@ -29,7 +29,9 @@ export class CommentsListController {
 
   _renderComments() {
     const commentContainer = this._commentsListComponent.getElement().querySelector('.film-details__comments-list');
-    this._commentControllers = this._film.comments.map((comment) => new CommentController(commentContainer, comment, this._onCommentDelete));
+    this._commentControllers = this._film.comments.map(
+      (comment) => new CommentController(commentContainer, comment, this._onCommentDelete),
+    );
     this._commentControllers.forEach((controller) => controller.render());
   }
 

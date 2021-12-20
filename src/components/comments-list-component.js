@@ -2,16 +2,17 @@ import { AbstractComponent } from './abstract-component';
 
 const emojies = ['smile', 'sleeping', 'puke', 'angry'];
 
-const createEmojiTemplate = (emoji) => {
-  return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
+const createEmojiTemplate = (
+  emoji,
+) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
     <label class="film-details__emoji-label" for="emoji-${emoji}">
       <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
     </label>`;
-};
 
-const createCommentsListTemplate = (film) => {
-  return `<section class="film-details__comments-wrap">
-    <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${film.comments.length}</span></h3>
+const createCommentsListTemplate = (film) => `<section class="film-details__comments-wrap">
+    <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${
+      film.comments.length
+    }</span></h3>
 
     <ul class="film-details__comments-list"></ul>
 
@@ -27,7 +28,6 @@ const createCommentsListTemplate = (film) => {
       </div>
     </div>
   </section>`;
-};
 
 export class CommentsListComponent extends AbstractComponent {
   constructor(film) {

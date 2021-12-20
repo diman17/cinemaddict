@@ -6,13 +6,11 @@ export const sortType = {
   RATING: 'rating',
 };
 
-const createSortingTemplate = () => {
-  return `<ul class="sort">
+const createSortingTemplate = () => `<ul class="sort">
       <li><a href="#" class="sort__button sort__button--active" data-sort="${sortType.DEFAULT}">Sort by default</a></li>
       <li><a href="#" class="sort__button" data-sort="${sortType.DATE}">Sort by date</a></li>
       <li><a href="#" class="sort__button" data-sort="${sortType.RATING}">Sort by rating</a></li>
     </ul>`;
-};
 
 export class SortingComponent extends AbstractComponent {
   constructor() {
@@ -20,6 +18,7 @@ export class SortingComponent extends AbstractComponent {
 
     this._currentSortType = sortType.DEFAULT;
   }
+
   getTemplate() {
     return createSortingTemplate();
   }

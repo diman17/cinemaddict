@@ -13,7 +13,10 @@ export class NavigationController {
   }
 
   render() {
-    this._navigationComponent = new NavigationComponent(this._filmsModel.getFilmsAll(), this._filmsModel.getFilterType());
+    this._navigationComponent = new NavigationComponent(
+      this._filmsModel.getFilmsAll(),
+      this._filmsModel.getFilterType(),
+    );
 
     render(this._container, this._navigationComponent);
 

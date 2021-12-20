@@ -14,13 +14,13 @@ const switchClass = (evt) => {
 const createFilmCardTemplate = (film) => {
   const { title, rating, date, duration, genre, srcPoster, description, isWatchlist, isWatched, isFavorite } = film;
 
-  const getShortDescription = (description) => {
-    if (description.length > MAX_LENGTH_OF_DESCRIPTION) {
-      description = description.split('').slice(0, MAX_LENGTH_OF_DESCRIPTION).join('');
-      return description.replace(/.$/, '...');
+  const getShortDescription = (text) => {
+    if (text.length > MAX_LENGTH_OF_DESCRIPTION) {
+      text = text.split('').slice(0, MAX_LENGTH_OF_DESCRIPTION).join('');
+      return text.replace(/.$/, '...');
     }
 
-    return description;
+    return text;
   };
 
   return `<article class="film-card">
@@ -38,8 +38,12 @@ const createFilmCardTemplate = (film) => {
         <button class="film-card__controls-item ${
           isWatchlist ? 'film-card__controls-item--active' : ''
         } button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-        <button class="film-card__controls-item ${isWatched ? 'film-card__controls-item--active' : ''} button film-card__controls-item--mark-as-watched">Mark as watched</button>
-        <button class="film-card__controls-item ${isFavorite ? 'film-card__controls-item--active' : ''} button film-card__controls-item--favorite">Mark as favorite</button>
+        <button class="film-card__controls-item ${
+          isWatched ? 'film-card__controls-item--active' : ''
+        } button film-card__controls-item--mark-as-watched">Mark as watched</button>
+        <button class="film-card__controls-item ${
+          isFavorite ? 'film-card__controls-item--active' : ''
+        } button film-card__controls-item--favorite">Mark as favorite</button>
       </form>
     </article>`;
 };

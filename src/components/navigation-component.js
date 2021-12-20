@@ -1,11 +1,18 @@
-import { filterType, getFilmsByAllFilter, getFilmsByFavoritesFilter, getFilmsByHistoryFilter, getFilmsByWatchlistFilter } from '../utils/filter';
+import {
+  filterType,
+  getFilmsByAllFilter,
+  getFilmsByFavoritesFilter,
+  getFilmsByHistoryFilter,
+  getFilmsByWatchlistFilter,
+} from '../utils/filter';
 import { AbstractSmartComponent } from './abstract-smart-component';
 
-const createNavigationItemTempalate = (href, isActive, name, filter, isCountable, count) => {
-  return `<a href="${href}" class="main-navigation__item ${isActive ? 'main-navigation__item--active' : ''}" data-filter="${filter}">${name} ${
+const createNavigationItemTempalate = (href, isActive, name, filter, isCountable, count) =>
+  `<a href="${href}" class="main-navigation__item ${
+    isActive ? 'main-navigation__item--active' : ''
+  }" data-filter="${filter}">${name} ${
     isCountable ? `<span class="main-navigation__item-count">${count}</span>` : ''
   }</a>`;
-};
 
 const createNavigationTemplate = (films, currentFilterType) => {
   const navigationItems = [
@@ -45,7 +52,18 @@ const createNavigationTemplate = (films, currentFilterType) => {
 
   return `<nav class="main-navigation">
       <div class="main-navigation__items">
-        ${navigationItems.map((el) => createNavigationItemTempalate(el.href, el.isActive, el.name, el.filter, el.isCountable, el.getCount(films).length)).join('\n')}
+        ${navigationItems
+          .map((el) =>
+            createNavigationItemTempalate(
+              el.href,
+              el.isActive,
+              el.name,
+              el.filter,
+              el.isCountable,
+              el.getCount(films).length,
+            ),
+          )
+          .join('\n')}
       </div>
     </nav>`;
 };

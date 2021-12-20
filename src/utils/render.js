@@ -11,8 +11,8 @@ export const renderPosition = {
   AFTER: 'after',
 };
 
-export const render = (container, component, renderPosition = 'append') => {
-  switch (renderPosition) {
+export const render = (container, component, position = 'append') => {
+  switch (position) {
     case 'append':
       container.append(component.getElement());
       break;
@@ -24,6 +24,8 @@ export const render = (container, component, renderPosition = 'append') => {
       break;
     case 'after':
       container.after(component.getElement());
+      break;
+    default:
       break;
   }
 };

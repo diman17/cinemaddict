@@ -1,6 +1,6 @@
+import { cloneDeep } from 'lodash';
 import { ShowMoreButtonComponent } from '../components/show-more-button-component';
 import { remove, render, renderPosition } from '../utils/render';
-import { cloneDeep } from 'lodash';
 import { FilmController } from './film-controller';
 import { SortingComponent, sortType } from '../components/sorting-component';
 
@@ -37,7 +37,16 @@ export class PageController {
 
   render() {
     this._films = this._filmsModel.getFilms();
-    const newFilms = this._renderFilms(this._films, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._api, this._onFilmChange, this._onFilmDetailsShow);
+    const newFilms = this._renderFilms(
+      this._films,
+      this._filmListContainer,
+      0,
+      this._showingFilmsCount,
+      this._filmsModel,
+      this._api,
+      this._onFilmChange,
+      this._onFilmDetailsShow,
+    );
 
     this._renderShowMoreButton();
 
@@ -82,8 +91,8 @@ export class PageController {
     return sortedFilms.slice(from, to);
   }
 
-  _onFilmChange(oldFilm, updateFilm) {
-    this._api.updateFilm(oldFilm._id, updateFilm).then((updateFilm) => {
+  _onFilmChange(oldFilm, newFilm) {
+    this._api.updateFilm(oldFilm._id, newFilm).then((updateFilm) => {
       const isSuccess = this._filmsModel.updateFilm(oldFilm._id, updateFilm);
 
       if (isSuccess) {
@@ -106,7 +115,16 @@ export class PageController {
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
     const sortedFilms = this._getSortedFilms(this._films, this._currentSortType, 0, this._showingFilmsCount);
-    const newFilms = this._renderFilms(sortedFilms, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._api, this._onFilmChange, this._onFilmDetailsShow);
+    const newFilms = this._renderFilms(
+      sortedFilms,
+      this._filmListContainer,
+      0,
+      this._showingFilmsCount,
+      this._filmsModel,
+      this._api,
+      this._onFilmChange,
+      this._onFilmDetailsShow,
+    );
 
     this._renderShowMoreButton();
 
@@ -123,7 +141,7 @@ export class PageController {
     this._films = this._filmsModel.getFilms();
 
     this._prevFilmsCount = this._showingFilmsCount;
-    this._showingFilmsCount = this._showingFilmsCount + SHOWING_FILMS_COUNT_BY_BUTTON;
+    this._showingFilmsCount += SHOWING_FILMS_COUNT_BY_BUTTON;
 
     const sortedFilms = this._getSortedFilms(this._films, this._currentSortType, 0, this._showingFilmsCount);
 
@@ -153,7 +171,16 @@ export class PageController {
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
     const sortedFilms = this._getSortedFilms(this._films, this._currentSortType, 0, this._showingFilmsCount);
-    const newFilms = this._renderFilms(sortedFilms, this._filmListContainer, 0, this._showingFilmsCount, this._filmsModel, this._api, this._onFilmChange, this._onFilmDetailsShow);
+    const newFilms = this._renderFilms(
+      sortedFilms,
+      this._filmListContainer,
+      0,
+      this._showingFilmsCount,
+      this._filmsModel,
+      this._api,
+      this._onFilmChange,
+      this._onFilmDetailsShow,
+    );
 
     this._renderShowMoreButton();
 

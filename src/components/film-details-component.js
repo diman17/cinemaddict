@@ -1,16 +1,45 @@
 import { getFormatDuration } from '../utils/common';
 import { AbstractComponent } from './abstract-component';
 
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
 const createFilmDetailsTemplate = (film) => {
-  const { title, age, rating, director, writters, actors, date, country, duration, genre, srcPoster, description, isWatchlist, isWatched, isFavorite } = film;
+  const {
+    title,
+    age,
+    rating,
+    director,
+    writters,
+    actors,
+    date,
+    country,
+    duration,
+    genre,
+    srcPoster,
+    description,
+    isWatchlist,
+    isWatched,
+    isFavorite,
+  } = film;
 
-  const getWritters = (writters) => {
-    if (writters.length === 1) {
-      return writters[0];
+  const getWritters = (writtersList) => {
+    if (writtersList.length === 1) {
+      return writtersList[0];
     }
-    return writters.join(', ');
+    return writtersList.join(', ');
   };
 
   return `<section class="film-details">
@@ -53,7 +82,9 @@ const createFilmDetailsTemplate = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${new Date(date).getDate()} ${MONTHS[new Date(date).getMonth()]} ${new Date(date).getFullYear()}</td>
+              <td class="film-details__cell">${new Date(date).getDate()} ${
+    MONTHS[new Date(date).getMonth()]
+  } ${new Date(date).getFullYear()}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
@@ -76,13 +107,19 @@ const createFilmDetailsTemplate = (film) => {
       </div>
 
       <section class="film-details__controls">
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isWatchlist ? 'checked' : ''}>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${
+          isWatchlist ? 'checked' : ''
+        }>
         <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? 'checked' : ''}>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${
+          isWatched ? 'checked' : ''
+        }>
         <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? 'checked' : ''}>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${
+          isFavorite ? 'checked' : ''
+        }>
         <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
       </section>
     </div>

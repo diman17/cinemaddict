@@ -12,13 +12,13 @@ const createCommentTemplate = (comment) => {
       month = `0${month}`;
     }
 
-    let day = date.getDate();
+    let daytime = date.getDate();
 
-    if (day < 10) {
-      day = `0${day}`;
+    if (daytime < 10) {
+      daytime = `0${daytime}`;
     }
 
-    return `${day}/${month}/${year}`;
+    return `${daytime}/${month}/${year}`;
   };
 
   return `<li class="film-details__comment">

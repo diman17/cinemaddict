@@ -27,12 +27,12 @@ export class FilmsModel {
     this._films = Array.from(films);
   }
 
-  updateFilm(id, film) {
+  updateFilm(id, newFilm) {
     const index = this._films.findIndex((film) => film._id === id);
 
     if (index === -1) return;
 
-    this._films = [].concat(this._films.slice(0, index), film, this._films.slice(index + 1));
+    this._films = [].concat(this._films.slice(0, index), newFilm, this._films.slice(index + 1));
 
     this._callHandlers(this._filmChangeHandlers);
 
@@ -43,8 +43,8 @@ export class FilmsModel {
     return this._currentFilterType;
   }
 
-  setFilterType(filterType) {
-    this._currentFilterType = filterType;
+  setFilterType(filter) {
+    this._currentFilterType = filter;
     this._callHandlers(this._filterChangeHandlers);
   }
 

@@ -24,8 +24,15 @@ export class FilmDetailsController {
   render() {
     document.body.classList.add('hide-overflow');
 
-    const commentsListContainer = this._filmDetailsComponent.getElement().querySelector('.form-details__bottom-container');
-    this._commentsListController = new CommentsListController(commentsListContainer, this.film, this._filmsModel, this._api);
+    const commentsListContainer = this._filmDetailsComponent
+      .getElement()
+      .querySelector('.form-details__bottom-container');
+    this._commentsListController = new CommentsListController(
+      commentsListContainer,
+      this.film,
+      this._filmsModel,
+      this._api,
+    );
 
     render(document.body, this._filmDetailsComponent);
     this.isShowing = true;
@@ -58,30 +65,15 @@ export class FilmDetailsController {
   }
 
   _handleButtonWatchlistClick() {
-    this._onFilmChange(
-      this.film,
-      Object.assign({}, this.film, {
-        isWatchlist: !this.film.isWatchlist,
-      }),
-    );
+    this._onFilmChange(this.film, { ...this.film, isWatchlist: !this.film.isWatchlist });
   }
 
   _handleButtonWatchedClick() {
-    this._onFilmChange(
-      this.film,
-      Object.assign({}, this.film, {
-        isWatched: !this.film.isWatched,
-      }),
-    );
+    this._onFilmChange(this.film, { ...this.film, isWatched: !this.film.isWatched });
   }
 
   _handleButtonFavoriteClick() {
-    this._onFilmChange(
-      this.film,
-      Object.assign({}, this.film, {
-        isFavorite: !this.film.isFavorite,
-      }),
-    );
+    this._onFilmChange(this.film, { ...this.film, isFavorite: !this.film.isFavorite });
   }
 
   _handleCloseButtonClick() {
