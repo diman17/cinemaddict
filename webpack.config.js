@@ -47,6 +47,10 @@ module.exports = {
 
     rules: [
       {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
         test: /\.(sa|sc|c)ss$/i,
         use: [
           (process.env.MODE === 'development') ? "style-loader" : MiniCssExtractPlugin.loader,
@@ -58,6 +62,10 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+        type: 'asset/resource',
       },
     ],
 
