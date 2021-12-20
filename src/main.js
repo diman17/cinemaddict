@@ -1,3 +1,6 @@
+import './css/normalize.css';
+import './css/style.css';
+
 import { ProfileComponent } from './components/profile-component';
 import { FilmsSectionComponent } from './components/films-section-component';
 import { FilmsCountComponent } from './components/films-count-component';

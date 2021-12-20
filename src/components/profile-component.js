@@ -4,15 +4,15 @@ import { AbstractComponent } from './abstract-component';
 const PROFILES = {
   NOVICE: {
     rating: 'Novice',
-    srcAvatar: 'images/film_bronze.svg',
+    srcAvatar: './images/profile/film_bronze.svg',
   },
   FAN: {
     rating: 'Fan',
-    srcAvatar: 'images/film_silver.svg',
+    srcAvatar: './images/profile/film_silver.svg',
   },
   MOVIE_BUFF: {
     rating: 'Movie Buff',
-    srcAvatar: 'images/film_gold.svg',
+    srcAvatar: './images/profile/film_gold.svg',
   },
 };
 
