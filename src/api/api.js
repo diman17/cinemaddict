@@ -1,4 +1,4 @@
-const URL_API = 'http://localhost:3000/api';
+const URL_API = 'https://cinemaddict-app.herokuapp.com/api';
 
 export class API {
   constructor() {
